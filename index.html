@@ -368,8 +368,13 @@ function doSignUpEmail(){
   if(!em||!pw){showAM('メールとパスワードを入力してください');return;}
   if(pw.length<6){showAM('パスワードは6文字以上にしてください');return;}
   sb.auth.signUp({email:em,password:pw}).then(function(r){
-    if(r.error)showAM(r.error.message);
-    else showAM('確認メールを送りました。メールを確認してください。');
+    if(r.error){
+      showAM(r.error.message);
+    } else if(r.data&&r.data.user&&r.data.user.identities&&r.data.user.identities.length===0){
+      showAM('このメールアドレスはすでに登録済みです。ログインしてください。');
+    } else {
+      showAM('確認メールを送りました。メールを確認してください。');
+    }
   });
 }
 function doSignOut(){
