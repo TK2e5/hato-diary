@@ -10,7 +10,12 @@
 <title>鳩日記</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+// Supabase をインライン定義（CDN依存なし）
+window._SUPA_URL='https://ythhbhqllrmkujimvrks.supabase.co';
+window._SUPA_KEY='sb_publishable_FRUTgWyI2cy9cJ47fF0t2w_ANbSrvpQ';
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" onerror="window._supaFailed=true"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
@@ -24,32 +29,22 @@
 }
 html,body{height:100%;background:var(--cream);font-family:var(--fn);color:var(--brown);-webkit-font-smoothing:antialiased}
 #app{max-width:430px;height:100vh;margin:0 auto;background:var(--cream);display:flex;flex-direction:column;overflow:hidden;position:relative}
-
-/* TOP BAR */
-.tb{height:52px;background:var(--white);border-bottom:0.5px solid var(--border);display:flex;align-items:center;padding:0 14px;gap:8px;flex-shrink:0;position:relative;z-index:10}
+.tb{height:52px;background:var(--white);border-bottom:.5px solid var(--border);display:flex;align-items:center;padding:0 14px;gap:8px;flex-shrink:0;z-index:10}
 .tb-t{font-size:17px;font-weight:500;color:var(--brown);flex:1;letter-spacing:.04em}
 .tb-d{font-size:11px;color:#9E7A68}
-
-/* SWIPE PANELS */
 .sw{flex:1;overflow:hidden;min-height:0}
 .tr{display:flex;width:400%;height:100%;will-change:transform;user-select:none;-webkit-user-select:none;transition:transform .32s cubic-bezier(.4,0,.2,1)}
 .pn{width:25%;height:100%;overflow:hidden;background:var(--cream);position:relative}
 .pn-scroll{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch}
-
-/* BOTTOM NAV */
-.bn{height:56px;background:var(--white);border-top:0.5px solid var(--border);display:flex;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom)}
+.bn{height:56px;background:var(--white);border-top:.5px solid var(--border);display:flex;flex-shrink:0;padding-bottom:env(safe-area-inset-bottom)}
 .nt{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:none;cursor:pointer;padding:6px 0}
 .nl{font-size:9px;color:#9E7A68;font-family:var(--fn)}
 .nt.on .nl{color:var(--f)}
-
-/* CARD */
-.card{background:var(--white);border:0.5px solid var(--border);border-radius:14px}
-
-/* ── ROKUYO 3COL ── */
-.rk-card{margin:10px;display:flex;overflow:hidden;border-radius:14px;border:0.5px solid var(--border);border-left-width:4px;border-left-style:solid}
+.card{background:var(--white);border:.5px solid var(--border);border-radius:14px}
+.rk-card{margin:10px;display:flex;overflow:hidden;border-radius:14px;border:.5px solid var(--border);border-left-width:4px;border-left-style:solid}
 .rc{display:flex;flex-direction:column;justify-content:center;padding:11px 10px}
-.rc-d{min-width:62px;align-items:center;text-align:center;border-right:0.5px solid var(--border);background:var(--white)}
-.rc-m{flex:1;border-right:0.5px solid var(--border);background:var(--white)}
+.rc-d{min-width:62px;align-items:center;text-align:center;border-right:.5px solid var(--border);background:var(--white)}
+.rc-m{flex:1;border-right:.5px solid var(--border);background:var(--white)}
 .rc-f{flex:1.1;background:#FAFAF8}
 .rk-db{font-size:18px;font-weight:500;color:var(--brown);line-height:1.1}
 .rk-ds{font-size:10px;color:#9E7A68;margin-top:2px}
@@ -58,51 +53,41 @@ html,body{height:100%;background:var(--cream);font-family:var(--fn);color:var(--
 .rk-lk{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;margin-top:4px}
 .rk-fl{font-size:9px;color:#9E7A68;letter-spacing:.05em;margin-bottom:3px}
 .rk-ft{font-size:11px;color:var(--brown);line-height:1.6}
-
-/* ── HOME ── */
 .hw{position:relative;height:100%;overflow:hidden}
 .hl{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;transition:transform .3s cubic-bezier(.4,0,.2,1)}
 .hl.pushed{transform:translateX(-30%)}
 .hf{position:absolute;inset:0;overflow-y:auto;background:var(--cream);transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
 .hf.on{transform:translateX(0)}
-
-.add-btn{display:block;margin:0 10px 0;padding:12px;background:var(--fp);border:0.5px solid var(--fm);border-radius:14px;font-size:14px;font-family:var(--fn);color:var(--f);cursor:pointer;font-weight:500;text-align:center}
+.add-btn{display:block;margin:0 10px 0;padding:12px;background:var(--fp);border:.5px solid var(--fm);border-radius:14px;font-size:14px;font-family:var(--fn);color:var(--f);cursor:pointer;font-weight:500;text-align:center}
 .cnt-lbl{font-size:10px;color:#9E7A68;text-align:right;padding:8px 10px 5px}
-
 .ec{padding:10px;margin:0 10px 8px;display:flex;gap:9px;position:relative}
 .et{width:62px;height:62px;border-radius:10px;flex-shrink:0;background:var(--fp);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .ei{flex:1;min-width:0;padding-right:40px}
 .ed{font-size:10px;color:#9E7A68}
 .eloc{font-size:10px;color:var(--f);margin:1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .em{font-size:12px;color:var(--brown);line-height:1.5;margin-top:2px}
-.tg{font-size:10px;padding:1px 6px;border-radius:20px;border:0.5px solid var(--border);color:#9E7A68;display:inline-block;margin:2px 2px 0 0}
-.edit-btn{position:absolute;top:8px;right:8px;background:#F5F0EC;border:0.5px solid var(--border);border-radius:8px;padding:4px 8px;font-size:11px;color:#9E7A68;cursor:pointer;font-family:var(--fn)}
-
-/* ── FORM ── */
-.fhdr{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--white);border-bottom:0.5px solid var(--border);flex-shrink:0}
+.tg{font-size:10px;padding:1px 6px;border-radius:20px;border:.5px solid var(--border);color:#9E7A68;display:inline-block;margin:2px 2px 0 0}
+.edit-btn{position:absolute;top:8px;right:8px;background:#F5F0EC;border:.5px solid var(--border);border-radius:8px;padding:4px 8px;font-size:11px;color:#9E7A68;cursor:pointer;font-family:var(--fn)}
+.fhdr{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--white);border-bottom:.5px solid var(--border);flex-shrink:0}
 .fbk{background:none;border:none;font-size:22px;color:var(--f);cursor:pointer;padding:0 2px;line-height:1}
 .fttl{font-size:16px;font-weight:500;color:var(--brown);flex:1}
-.fdel{background:none;border:0.5px solid #F7C1C1;border-radius:8px;padding:5px 8px;font-size:11px;color:#E24B4A;cursor:pointer;font-family:var(--fn);display:none}
+.fdel{background:none;border:.5px solid #F7C1C1;border-radius:8px;padding:5px 8px;font-size:11px;color:#E24B4A;cursor:pointer;font-family:var(--fn);display:none}
 .fb{padding:12px;overflow-y:auto;height:calc(100% - 54px);-webkit-overflow-scrolling:touch}
 .frow{display:flex;gap:8px;margin-bottom:10px}
-.finp{flex:1;background:var(--white);border:0.5px solid var(--border);border-radius:10px;overflow:hidden}
+.finp{flex:1;background:var(--white);border:.5px solid var(--border);border-radius:10px;overflow:hidden}
 .finp label{display:block;font-size:10px;color:#9E7A68;padding:6px 10px 2px;letter-spacing:.04em}
 .finp input{display:block;width:100%;padding:4px 10px 8px;border:none;font-size:13px;font-family:var(--fn);color:var(--brown);background:transparent;outline:none}
-
-/* photo */
 .pz{width:100%;height:130px;border:2px dashed var(--fm);border-radius:14px;background:var(--fp);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;margin-bottom:10px;position:relative}
 .pp{text-align:center;color:var(--f)}
 .pp p{font-size:12px;margin-top:5px}
 .pp .hint{font-size:10px;color:var(--fm);margin-top:2px}
-
-/* AI box */
-.ai-box{background:var(--white);border:0.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;display:none}
+.ai-box{background:var(--white);border:.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px;display:none}
 .ai-box.on{display:block}
-.ai-hdr{display:flex;align-items:center;gap:6px;padding:8px 11px;border-bottom:0.5px solid var(--border);background:#FAFAF8}
+.ai-hdr{display:flex;align-items:center;gap:6px;padding:8px 11px;border-bottom:.5px solid var(--border);background:#FAFAF8}
 .ai-ttl{font-size:11px;font-weight:500;color:#9E7A68;flex:1}
-.ai-badge{font-size:10px;padding:2px 7px;border-radius:20px;background:var(--fp);border:0.5px solid var(--fm);color:var(--f)}
+.ai-badge{font-size:10px;padding:2px 7px;border-radius:20px;background:var(--fp);border:.5px solid var(--fm);color:var(--f)}
 .ai-loading{padding:14px;text-align:center;font-size:12px;color:#9E7A68}
-.ai-row{display:flex;align-items:center;gap:10px;padding:8px 11px;cursor:pointer;border-bottom:0.5px solid var(--border);transition:background .15s}
+.ai-row{display:flex;align-items:center;gap:10px;padding:8px 11px;cursor:pointer;border-bottom:.5px solid var(--border);transition:background .15s}
 .ai-row:last-child{border-bottom:none}
 .ai-row:hover,.ai-row.sel{background:var(--fp)}
 .ai-nm{font-size:13px;color:var(--brown);flex:1}
@@ -113,9 +98,7 @@ html,body{height:100%;background:var(--cream);font-family:var(--fn);color:var(--
 .ai-chk{color:var(--f);font-size:14px;opacity:0}
 .ai-row.sel .ai-chk{opacity:1}
 .ai-row.sel .ai-nm{color:var(--f);font-weight:500}
-
-/* map */
-.loc-toggle{display:flex;align-items:center;gap:8px;background:var(--white);border:0.5px solid var(--border);border-radius:10px;padding:9px 12px;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
+.loc-toggle{display:flex;align-items:center;gap:8px;background:var(--white);border:.5px solid var(--border);border-radius:10px;padding:9px 12px;margin-bottom:10px;cursor:pointer;transition:border-color .2s}
 .loc-toggle.open{border-color:var(--fm);border-radius:10px 10px 0 0;margin-bottom:0}
 .loc-pin{font-size:16px;flex-shrink:0}
 .loc-txt{flex:1;font-size:12px;color:#9E7A68}
@@ -124,38 +107,32 @@ html,body{height:100%;background:var(--cream);font-family:var(--fn);color:var(--
 .loc-chev.open{transform:rotate(180deg)}
 .map-picker{overflow:hidden;max-height:0;transition:max-height .35s cubic-bezier(.4,0,.2,1);margin-bottom:10px}
 .map-picker.open{max-height:300px}
-.map-inner{background:var(--white);border:0.5px solid var(--fm);border-top:none;border-radius:0 0 10px 10px;overflow:hidden}
+.map-inner{background:var(--white);border:.5px solid var(--fm);border-top:none;border-radius:0 0 10px 10px;overflow:hidden}
 #mapbox{height:200px;width:100%}
-.map-footer{padding:7px 10px;display:flex;align-items:center;gap:8px;border-top:0.5px solid var(--border)}
+.map-footer{padding:7px 10px;display:flex;align-items:center;gap:8px;border-top:.5px solid var(--border)}
 .map-addr{flex:1;font-size:11px;color:#9E7A68;line-height:1.4}
-.map-gps{padding:5px 10px;background:var(--fp);border:0.5px solid var(--fm);border-radius:8px;font-size:11px;color:var(--f);cursor:pointer;font-family:var(--fn);white-space:nowrap}
+.map-gps{padding:5px 10px;background:var(--fp);border:.5px solid var(--fm);border-radius:8px;font-size:11px;color:var(--f);cursor:pointer;font-family:var(--fn);white-space:nowrap}
 .map-ok{padding:5px 12px;background:var(--f);border:none;border-radius:8px;font-size:11px;color:white;cursor:pointer;font-family:var(--fn)}
-.map-tip{padding:6px 10px;background:#FBF3E3;border-top:0.5px solid #E8C87A;font-size:10px;color:#7a6030}
-
-/* memo */
+.map-tip{padding:6px 10px;background:#FBF3E3;border-top:.5px solid #E8C87A;font-size:10px;color:#7a6030}
 .fta-wrap{margin-bottom:10px}
 .fta-wrap label{display:block;font-size:11px;color:#9E7A68;margin-bottom:4px}
-.fta-wrap textarea{width:100%;padding:10px 12px;border:0.5px solid var(--border);border-radius:10px;font-size:13px;font-family:var(--fn);color:var(--brown);resize:none;background:var(--white);line-height:1.65;outline:none}
+.fta-wrap textarea{width:100%;padding:10px 12px;border:.5px solid var(--border);border-radius:10px;font-size:13px;font-family:var(--fn);color:var(--brown);resize:none;background:var(--white);line-height:1.65;outline:none}
 .fctr{font-size:11px;color:#9E7A68;text-align:right;margin-top:3px}
 .fctr.w{color:#E24B4A}
-
-/* delete confirm */
-.del-confirm{background:#FCEBEB;border:0.5px solid #F7C1C1;border-radius:10px;padding:10px 12px;margin-bottom:10px;display:none}
+.del-confirm{background:#FCEBEB;border:.5px solid #F7C1C1;border-radius:10px;padding:10px 12px;margin-bottom:10px;display:none}
 .del-confirm.on{display:block}
 .del-confirm p{font-size:12px;color:#A32D2D;margin-bottom:8px;line-height:1.5}
 .del-row{display:flex;gap:8px}
 .del-yes{flex:1;padding:8px;background:#E24B4A;border:none;border-radius:8px;font-size:12px;font-family:var(--fn);color:white;cursor:pointer}
-.del-no{flex:1;padding:8px;background:var(--white);border:0.5px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--fn);color:#9E7A68;cursor:pointer}
+.del-no{flex:1;padding:8px;background:var(--white);border:.5px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--fn);color:#9E7A68;cursor:pointer}
 .fsav{width:100%;padding:13px;background:var(--f);border:none;border-radius:14px;font-size:15px;font-family:var(--fn);color:white;cursor:pointer;letter-spacing:.06em}
-
-/* ── CALENDAR ── */
-.cal-nav{display:flex;align-items:center;padding:10px 12px 6px;background:var(--white);border-bottom:0.5px solid var(--border)}
-.cal-nav button{background:none;border:0.5px solid var(--border);border-radius:8px;padding:4px 10px;font-size:14px;cursor:pointer;color:var(--brown);font-family:var(--fn)}
+.cal-nav{display:flex;align-items:center;padding:10px 12px 6px;background:var(--white);border-bottom:.5px solid var(--border)}
+.cal-nav button{background:none;border:.5px solid var(--border);border-radius:8px;padding:4px 10px;font-size:14px;cursor:pointer;color:var(--brown);font-family:var(--fn)}
 .cal-m{flex:1;text-align:center;font-size:15px;font-weight:500;color:var(--brown)}
 .cdw{display:grid;grid-template-columns:repeat(7,1fr);padding:6px 6px 2px;background:var(--white)}
 .cdw span{text-align:center;font-size:9px;color:#9E7A68}
 .cg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:2px 6px 8px;background:var(--white)}
-.cc{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;padding:2px 1px 1px;cursor:pointer;position:relative;overflow:hidden;border:0.5px solid transparent}
+.cc{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;padding:2px 1px 1px;cursor:pointer;position:relative;overflow:hidden;border:.5px solid transparent}
 .cc:hover{border-color:var(--border)}
 .cc.has{border-color:var(--border)}
 .cc.td .dn{background:var(--f);color:white!important;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center}
@@ -166,17 +143,15 @@ html,body{height:100%;background:var(--cream);font-family:var(--fn);color:var(--
 .cbg{position:absolute;inset:0;opacity:.5;z-index:0}
 .cal-detail{margin:8px;padding:11px;display:none}
 .cal-detail.on{display:block}
-.hol-legend{margin:8px;padding:10px;border-radius:10px;background:var(--white);border:0.5px solid var(--border)}
+.hol-legend{margin:8px;padding:10px;border-radius:10px;background:var(--white);border:.5px solid var(--border)}
 .hi{display:flex;align-items:center;gap:6px;font-size:11px;color:#9E7A68;margin-bottom:3px}
 .hm{width:6px;height:6px;border-radius:50%;background:#E24B4A;flex-shrink:0}
-
-/* ── ZUKAN ── */
 .zw{position:relative;height:100%;overflow:hidden}
 .zl{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;transition:transform .3s cubic-bezier(.4,0,.2,1)}
 .zl.ps{transform:translateX(-30%)}
 .zd{position:absolute;inset:0;overflow-y:auto;background:var(--cream);transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1)}
 .zd.on{transform:translateX(0)}
-.zbk{display:flex;align-items:center;gap:6px;padding:10px 12px;background:var(--white);border-bottom:0.5px solid var(--border);cursor:pointer}
+.zbk{display:flex;align-items:center;gap:6px;padding:10px 12px;background:var(--white);border-bottom:.5px solid var(--border);cursor:pointer}
 .zbk span{font-size:13px;color:var(--f)}
 .bg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:8px}
 .bc{overflow:hidden;cursor:pointer}
@@ -184,8 +159,8 @@ html,body{height:100%;background:var(--cream);font-family:var(--fn);color:var(--
 .bif{padding:7px 9px 9px}
 .bn2{font-size:13px;font-weight:500;color:var(--brown)}
 .bsc{font-size:10px;color:#9E7A68;font-style:italic;margin-top:1px}
-.zst{background:var(--white);border-bottom:0.5px solid var(--border);padding:8px 10px}
-.zst input{width:100%;padding:7px 11px;border:0.5px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--fn);background:#FAFAF8;color:var(--brown);outline:none}
+.zst{background:var(--white);border-bottom:.5px solid var(--border);padding:8px 10px}
+.zst input{width:100%;padding:7px 11px;border:.5px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--fn);background:#FAFAF8;color:var(--brown);outline:none}
 .zi{width:100%;height:140px;display:flex;align-items:center;justify-content:center}
 .zbo{padding:12px}
 .d-nm{font-size:20px;font-weight:500;color:var(--brown)}
@@ -196,11 +171,9 @@ html,body{height:100%;background:var(--cream);font-family:var(--fn);color:var(--
 .stat-k{font-size:10px;color:#9E7A68;margin-top:2px}
 .d-sec{font-size:10px;color:#9E7A68;letter-spacing:.08em;text-transform:uppercase;margin:10px 0 5px}
 .d-desc{font-size:12px;color:#9E7A68;line-height:1.75}
-
-/* ── SETTINGS ── */
 .sl{font-size:10px;color:#9E7A68;letter-spacing:.08em;padding:10px 12px 4px;text-transform:uppercase}
 .ss{margin:0 10px}
-.sr{display:flex;align-items:center;gap:12px;padding:11px 13px;background:var(--white);border-bottom:0.5px solid var(--border)}
+.sr{display:flex;align-items:center;gap:12px;padding:11px 13px;background:var(--white);border-bottom:.5px solid var(--border)}
 .sr:first-child{border-radius:14px 14px 0 0}
 .sr:last-child{border-radius:0 0 14px 14px;border-bottom:none}
 .sr:only-child{border-radius:14px;border-bottom:none}
@@ -212,51 +185,36 @@ html,body{height:100%;background:var(--cream);font-family:var(--fn);color:var(--
 .tg2::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:white;top:3px;left:3px;transition:transform .2s}
 .tg2.on::after{transform:translateX(16px)}
 .av{width:44px;height:44px;border-radius:50%;background:var(--fp);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.abtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:10px;border:0.5px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--fn);color:var(--brown);cursor:pointer;background:var(--white);margin-top:6px}
-.abtn.ap{background:var(--brown);color:var(--white);border:none;margin-top:8px}
-.ls{display:flex;background:#F5F0EC;border:0.5px solid var(--border);border-radius:20px;overflow:hidden}
+.abtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:10px;border:.5px solid var(--border);border-radius:8px;font-size:12px;font-family:var(--fn);color:var(--brown);cursor:pointer;background:var(--white);margin-top:6px}
+.ls{display:flex;background:#F5F0EC;border:.5px solid var(--border);border-radius:20px;overflow:hidden}
 .lo{padding:4px 10px;font-size:11px;font-family:var(--fn);color:#9E7A68;border:none;background:none;cursor:pointer}
 .lo.on{background:var(--f);color:white;border-radius:20px}
 .ver{text-align:center;font-size:10px;color:#9E7A68;padding:16px 0}
-
-/* spin anim */
+.auth-input{width:100%;padding:9px 12px;border:.5px solid var(--border);border-radius:8px;font-size:13px;font-family:var(--fn);margin-bottom:6px;outline:none;background:var(--white);color:var(--brown);display:block}
+.auth-input:focus{border-color:var(--fm)}
+.sync-banner{background:var(--fp);border:.5px solid var(--fm);border-radius:10px;padding:8px 12px;margin:0 10px 10px;font-size:11px;color:var(--f);display:none}
+.sync-banner.on{display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 <div id="app">
-
-<!-- TOP BAR -->
 <div class="tb">
   <svg width="26" height="26" viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="21" rx="10" ry="7" fill="#9ACAAA"/><ellipse cx="16" cy="16" rx="6.5" ry="6" fill="#4A7A58"/><circle cx="20" cy="13" r="2.8" fill="#2E5C3A"/><circle cx="21" cy="12.2" r=".8" fill="white"/><path d="M22 14L26 13 25.5 15.5Z" fill="#D4904A"/></svg>
   <div class="tb-t" id="tb-t">鳩日記</div>
   <div class="tb-d" id="tb-d"></div>
 </div>
-
-<!-- SWIPE -->
 <div class="sw"><div class="tr" id="tr">
-
 <!-- HOME -->
-<div class="pn">
-<div class="hw">
+<div class="pn"><div class="hw">
   <div class="hl" id="hl">
+    <div class="sync-banner" id="sync-banner">☁️ 同期中...</div>
     <div class="card rk-card" id="rk-card">
-      <div class="rc rc-d">
-        <div class="rk-db" id="rk-db"></div>
-        <div class="rk-ds" id="rk-yr"></div>
-        <div class="rk-ds" id="rk-dw"></div>
-      </div>
-      <div class="rc rc-m">
-        <div class="rk-nm" id="rk-nm"></div>
-        <div class="rk-rd" id="rk-rd"></div>
-        <span class="rk-lk" id="rk-lk"></span>
-      </div>
-      <div class="rc rc-f">
-        <div class="rk-fl" id="rk-fl">今日の一言</div>
-        <div class="rk-ft" id="rk-ft"></div>
-      </div>
+      <div class="rc rc-d"><div class="rk-db" id="rk-db"></div><div class="rk-ds" id="rk-yr"></div><div class="rk-ds" id="rk-dw"></div></div>
+      <div class="rc rc-m"><div class="rk-nm" id="rk-nm"></div><div class="rk-rd" id="rk-rd"></div><span class="rk-lk" id="rk-lk"></span></div>
+      <div class="rc rc-f"><div class="rk-fl" id="rk-fl">今日の一言</div><div class="rk-ft" id="rk-ft"></div></div>
     </div>
-    <button class="add-btn" style="margin-bottom:10px" onclick="openForm(null)" id="add-btn">＋ 今日の鳩を記録する</button>
+    <button class="add-btn" style="margin-bottom:10px" id="add-btn" onclick="openForm(null)">＋ 今日の鳩を記録する</button>
     <div class="cnt-lbl" id="cnt-lbl">記録 0 羽</div>
     <div id="elist"></div>
     <div style="height:16px"></div>
@@ -276,329 +234,234 @@ html,body{height:100%;background:var(--cream);font-family:var(--fn);color:var(--
         <div class="finp"><label>日付</label><input type="date" id="f-date"></div>
         <div class="finp"><label>時刻</label><input type="time" id="f-time"></div>
       </div>
-      <div class="pz" id="pz" onclick="trigAI()">
+      <div class="pz" id="pz">
         <input type="file" id="f-file" accept="image/*" capture="environment" style="display:none">
-        <div class="pp" id="pp">
-          <svg width="32" height="32" viewBox="0 0 36 36" fill="none"><rect x="2" y="8" width="32" height="22" rx="5" fill="#C8DEC8"/><circle cx="18" cy="19" r="7" fill="#4A7A58"/><circle cx="18" cy="19" r="4" fill="#E6F2EA"/><rect x="23" y="10" width="6" height="4" rx="2" fill="#4A7A58"/></svg>
-          <p>タップして写真を追加</p>
-          <p class="hint">AIが鳥を自動識別します</p>
-        </div>
-        <img id="f-prev" style="display:none;width:100%;height:100%;object-fit:cover" alt="プレビュー">
+        <div class="pp" id="pp"><svg width="32" height="32" viewBox="0 0 36 36" fill="none"><rect x="2" y="8" width="32" height="22" rx="5" fill="#C8DEC8"/><circle cx="18" cy="19" r="7" fill="#4A7A58"/><circle cx="18" cy="19" r="4" fill="#E6F2EA"/><rect x="23" y="10" width="6" height="4" rx="2" fill="#4A7A58"/></svg><p>タップして写真を追加</p><p class="hint">AIが鳥を自動識別します</p></div>
+        <img id="f-prev" style="display:none;width:100%;height:100%;object-fit:cover" alt="">
       </div>
       <div class="ai-box" id="ai-box">
-        <div class="ai-hdr">
-          <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#E6F2EA" stroke="#9ACAAA" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#4A7A58" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <div class="ai-ttl" id="ai-ttl">AI識別中...</div>
-          <span class="ai-badge">iNaturalist API</span>
-        </div>
+        <div class="ai-hdr"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#E6F2EA" stroke="#9ACAAA" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#4A7A58" stroke-width="1.5" stroke-linecap="round"/></svg><div class="ai-ttl" id="ai-ttl">AI識別中...</div><span class="ai-badge">iNaturalist API</span></div>
         <div id="ai-body"></div>
       </div>
-      <div class="loc-toggle" id="loc-toggle" onclick="toggleMap()">
-        <span class="loc-pin">📍</span>
-        <span class="loc-txt" id="loc-txt">場所を選択（タップで地図を開く）</span>
-        <span class="loc-chev" id="loc-chev">▼</span>
-      </div>
-      <div class="map-picker" id="map-picker">
-        <div class="map-inner">
-          <div id="mapbox"></div>
-          <div class="map-tip">地図をタップ or ピンをドラッグして場所を指定</div>
-          <div class="map-footer">
-            <div class="map-addr" id="map-addr">地図でピンを移動してください</div>
-            <div style="display:flex;gap:6px;flex-shrink:0">
-              <button class="map-gps" id="map-gps-btn" onclick="flyToGPS()">現在地</button>
-              <button class="map-ok" onclick="confirmLoc()">確定</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="fta-wrap">
-        <label>メモ（100字まで）</label>
-        <textarea id="f-ta" rows="3" maxlength="100" placeholder="今日の鳩のことを書いてみよう" oninput="updC()"></textarea>
-        <div class="fctr" id="f-ctr">0 / 100</div>
-      </div>
+      <div class="loc-toggle" id="loc-toggle" onclick="toggleMap()"><span class="loc-pin">📍</span><span class="loc-txt" id="loc-txt">場所を選択（タップで地図を開く）</span><span class="loc-chev" id="loc-chev">▼</span></div>
+      <div class="map-picker" id="map-picker"><div class="map-inner"><div id="mapbox"></div><div class="map-tip">地図をタップ or ピンをドラッグして場所を指定</div><div class="map-footer"><div class="map-addr" id="map-addr">地図でピンを移動してください</div><div style="display:flex;gap:6px;flex-shrink:0"><button class="map-gps" id="map-gps-btn" onclick="flyToGPS()">現在地</button><button class="map-ok" onclick="confirmLoc()">確定</button></div></div></div></div>
+      <div class="fta-wrap"><label>メモ（100字まで）</label><textarea id="f-ta" rows="3" maxlength="100" placeholder="今日の鳩のことを書いてみよう" oninput="updC()"></textarea><div class="fctr" id="f-ctr">0 / 100</div></div>
       <button class="fsav" id="fsav" onclick="saveEntry()">記録する</button>
     </div>
   </div>
-</div>
-</div>
-
+</div></div>
 <!-- CALENDAR -->
 <div class="pn"><div class="pn-scroll">
-  <div class="cal-nav">
-    <button id="pm">&#8249;</button>
-    <span class="cal-m" id="cml">2026年5月</span>
-    <button id="nm">&#8250;</button>
-  </div>
+  <div class="cal-nav"><button id="pm">&#8249;</button><span class="cal-m" id="cml">2026年5月</span><button id="nm">&#8250;</button></div>
   <div class="cdw" id="cdw"></div>
   <div class="cg" id="cg"></div>
   <div class="card cal-detail" id="cal-det"></div>
-  <div class="hol-legend">
-    <div style="font-size:10px;color:#9E7A68;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px" id="hll">今月の祝日</div>
-    <div id="hls"></div>
-  </div>
+  <div class="hol-legend"><div style="font-size:10px;color:#9E7A68;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px" id="hll">今月の祝日</div><div id="hls"></div></div>
   <div style="height:8px"></div>
 </div></div>
-
 <!-- ZUKAN -->
-<div class="pn" style="overflow:hidden">
-<div class="zw">
+<div class="pn" style="overflow:hidden"><div class="zw">
   <div class="zl" id="zl">
     <div class="zst"><input id="zq" placeholder="鳥の名前で検索..." oninput="fltB()"></div>
     <div class="bg" id="bg">
-      <div class="card bc" onclick="opB(0)">
-        <div class="bi" style="background:#EDF5ED"><svg width="74" height="84" viewBox="0 0 80 90" fill="none"><ellipse cx="40" cy="62" rx="24" ry="18" fill="#C8DEC8"/><ellipse cx="40" cy="47" rx="17" ry="16" fill="#4A7A58"/><circle cx="52" cy="39" r="8" fill="#2E5C3A"/><circle cx="55" cy="36.5" r="2.2" fill="white"/><path d="M57 41L68 38 66 43Z" fill="#D4904A"/><path d="M22 62Q14 54 10 62Q17 66 22 62Z" fill="#4A7A58"/><path d="M58 62Q66 54 70 62Q63 66 58 62Z" fill="#4A7A58"/></svg></div>
-        <div class="bif"><div class="bn2" id="b0n">ドバト</div><div class="bsc">Columba livia</div><div style="font-size:11px;margin-top:4px"><span style="color:#C4922A">★★★★</span><span style="color:#E8D8CC">★</span></div><div style="font-size:10px;color:#9E7A68;margin-top:2px" id="b0m">遭遇 0回</div></div>
-      </div>
-      <div class="card bc" onclick="opB(1)">
-        <div class="bi" style="background:#F0EBF5"><svg width="74" height="84" viewBox="0 0 80 90" fill="none"><ellipse cx="40" cy="62" rx="22" ry="17" fill="#D4C8E8"/><ellipse cx="40" cy="47" rx="16" ry="15" fill="#9E87C8"/><circle cx="51" cy="39" r="7.5" fill="#7A68A8"/><circle cx="53.5" cy="36.5" r="2" fill="white"/><path d="M55 41L66 38 64 43Z" fill="#E8A050"/><path d="M22 62Q14 54 10 62Q17 66 22 62Z" fill="#9E87C8"/><path d="M57 62Q65 54 69 62Q62 66 57 62Z" fill="#9E87C8"/></svg></div>
-        <div class="bif"><div class="bn2" id="b1n">アオバト</div><div class="bsc">Treron sieboldii</div><div style="font-size:11px;margin-top:4px"><span style="color:#C4922A">★★</span><span style="color:#E8D8CC">★★★</span></div><div style="font-size:10px;color:#9E7A68;margin-top:2px" id="b1m">遭遇 0回</div></div>
-      </div>
+      <div class="card bc" onclick="opB(0)"><div class="bi" style="background:#EDF5ED"><svg width="74" height="84" viewBox="0 0 80 90" fill="none"><ellipse cx="40" cy="62" rx="24" ry="18" fill="#C8DEC8"/><ellipse cx="40" cy="47" rx="17" ry="16" fill="#4A7A58"/><circle cx="52" cy="39" r="8" fill="#2E5C3A"/><circle cx="55" cy="36.5" r="2.2" fill="white"/><path d="M57 41L68 38 66 43Z" fill="#D4904A"/><path d="M22 62Q14 54 10 62Q17 66 22 62Z" fill="#4A7A58"/><path d="M58 62Q66 54 70 62Q63 66 58 62Z" fill="#4A7A58"/></svg></div><div class="bif"><div class="bn2" id="b0n">ドバト</div><div class="bsc">Columba livia</div><div style="font-size:11px;margin-top:4px"><span style="color:#C4922A">★★★★</span><span style="color:#E8D8CC">★</span></div><div style="font-size:10px;color:#9E7A68;margin-top:2px" id="b0m">遭遇 0回</div></div></div>
+      <div class="card bc" onclick="opB(1)"><div class="bi" style="background:#F0EBF5"><svg width="74" height="84" viewBox="0 0 80 90" fill="none"><ellipse cx="40" cy="62" rx="22" ry="17" fill="#D4C8E8"/><ellipse cx="40" cy="47" rx="16" ry="15" fill="#9E87C8"/><circle cx="51" cy="39" r="7.5" fill="#7A68A8"/><circle cx="53.5" cy="36.5" r="2" fill="white"/><path d="M55 41L66 38 64 43Z" fill="#E8A050"/><path d="M22 62Q14 54 10 62Q17 66 22 62Z" fill="#9E87C8"/><path d="M57 62Q65 54 69 62Q62 66 57 62Z" fill="#9E87C8"/></svg></div><div class="bif"><div class="bn2" id="b1n">アオバト</div><div class="bsc">Treron sieboldii</div><div style="font-size:11px;margin-top:4px"><span style="color:#C4922A">★★</span><span style="color:#E8D8CC">★★★</span></div><div style="font-size:10px;color:#9E7A68;margin-top:2px" id="b1m">遭遇 0回</div></div></div>
     </div>
     <div style="height:12px"></div>
   </div>
   <div class="zd" id="zd">
     <div class="zbk" onclick="clB()"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="#4A7A58" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="zbk-lbl">図鑑に戻る</span></div>
     <div class="zi" id="zi" style="background:#EDF5ED"></div>
-    <div class="zbo">
-      <div class="d-nm" id="d-nm"></div>
-      <div class="d-sc" id="d-sc"></div>
-      <div class="stat-row">
-        <div class="stat-b"><div class="stat-v" id="d-ln"></div><div class="stat-k" id="d-lk">全長</div></div>
-        <div class="stat-b"><div class="stat-v" id="d-mt"></div><div class="stat-k" id="d-mk">遭遇</div></div>
-        <div class="stat-b"><div class="stat-v" id="d-rr"></div><div class="stat-k" id="d-rk">レア度</div></div>
-      </div>
-      <div class="d-sec" id="d-el">生態</div>
-      <div class="d-desc" id="d-ds"></div>
-      <div class="d-sec" id="d-rl">鳩日記との関係</div>
-      <div class="d-desc" id="d-ht"></div>
-    </div>
+    <div class="zbo"><div class="d-nm" id="d-nm"></div><div class="d-sc" id="d-sc"></div><div class="stat-row"><div class="stat-b"><div class="stat-v" id="d-ln"></div><div class="stat-k" id="d-lk">全長</div></div><div class="stat-b"><div class="stat-v" id="d-mt"></div><div class="stat-k" id="d-mk">遭遇</div></div><div class="stat-b"><div class="stat-v" id="d-rr"></div><div class="stat-k" id="d-rk">レア度</div></div></div><div class="d-sec" id="d-el">生態</div><div class="d-desc" id="d-ds"></div><div class="d-sec" id="d-rl">鳩日記との関係</div><div class="d-desc" id="d-ht"></div></div>
   </div>
-</div>
-</div>
-
+</div></div>
 <!-- SETTINGS -->
 <div class="pn"><div class="pn-scroll">
-  <div class="sl" id="s-al">アカウント</div>
+  <div class="sl">アカウント</div>
   <div class="ss">
-    <div class="sr">
-      <div class="av"><svg width="22" height="22" viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="21" rx="10" ry="7" fill="#9ACAAA"/><ellipse cx="16" cy="16" rx="6.5" ry="6" fill="#4A7A58"/><circle cx="20" cy="13" r="2.8" fill="#2E5C3A"/></svg></div>
-      <div style="flex:1"><div class="sk" id="s-gu">ゲストユーザー</div><div class="sk2" id="s-gs">ログインするとデータが安全に保存されます</div></div>
-    </div>
-    <div style="padding:10px 12px 12px;border-top:0.5px solid var(--border);background:var(--white)">
-      <!-- ログイン済み -->
-      <div id="auth-loggedin" style="display:none;padding:8px 0">
-        <div style="font-size:13px;color:var(--brown);margin-bottom:8px" id="auth-email-display"></div>
-        <button class="abtn" onclick="signOut()" style="color:#E24B4A;border-color:#F7C1C1"><span id="s-logout">サインアウト</span></button>
+    <div class="sr"><div class="av"><svg width="22" height="22" viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="21" rx="10" ry="7" fill="#9ACAAA"/><ellipse cx="16" cy="16" rx="6.5" ry="6" fill="#4A7A58"/><circle cx="20" cy="13" r="2.8" fill="#2E5C3A"/></svg></div><div style="flex:1"><div class="sk" id="s-gu">ゲストユーザー</div><div class="sk2" id="s-gs">ログインするとデータが安全に保存されます</div></div></div>
+    <div style="padding:10px 12px 12px;border-top:.5px solid var(--border);background:var(--white)">
+      <div id="auth-out">
+        <button class="abtn" id="btn-google" onclick="doSignInGoogle()"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Googleでサインイン</button>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:10px"><div style="flex:1;height:.5px;background:var(--border)"></div><span style="font-size:11px;color:#9E7A68">または</span><div style="flex:1;height:.5px;background:var(--border)"></div></div>
+        <input class="auth-input" id="auth-email" type="email" placeholder="メールアドレス" style="margin-top:10px">
+        <input class="auth-input" id="auth-pass" type="password" placeholder="パスワード（6文字以上）">
+        <div style="display:flex;gap:6px"><button class="abtn" id="btn-login" onclick="doSignInEmail()" style="flex:1;margin-top:0">ログイン</button><button class="abtn" id="btn-signup" onclick="doSignUpEmail()" style="flex:1;margin-top:0;color:var(--f);border-color:var(--fm)">新規登録</button></div>
+        <div id="auth-msg" style="font-size:11px;color:#E24B4A;margin-top:6px;display:none;text-align:center"></div>
       </div>
-      <!-- ログアウト状態 -->
-      <div id="auth-loggedout">
-        <button class="abtn" onclick="signInGoogle()"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><span id="s-gg">Googleでサインイン</span></button>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:8px"><div style="flex:1;height:0.5px;background:var(--border)"></div><span style="font-size:11px;color:#9E7A68" id="s-or">または</span><div style="flex:1;height:0.5px;background:var(--border)"></div></div>
-        <!-- メール入力フォーム -->
-        <div id="email-form" style="margin-top:8px">
-          <input id="auth-email" type="email" placeholder="メールアドレス" style="width:100%;padding:9px 12px;border:.5px solid var(--border);border-radius:8px;font-size:13px;font-family:var(--fn);margin-bottom:6px;outline:none;background:var(--white)">
-          <input id="auth-pass" type="password" placeholder="パスワード（6文字以上）" style="width:100%;padding:9px 12px;border:.5px solid var(--border);border-radius:8px;font-size:13px;font-family:var(--fn);margin-bottom:6px;outline:none;background:var(--white)">
-          <div style="display:flex;gap:6px">
-            <button class="abtn" onclick="signInEmail()" style="flex:1;margin-top:0"><span id="s-em">ログイン</span></button>
-            <button class="abtn" onclick="signUpEmail()" style="flex:1;margin-top:0;color:var(--f);border-color:var(--fm)"><span id="s-signup">新規登録</span></button>
-          </div>
-          <div id="auth-msg" style="font-size:11px;color:#E24B4A;margin-top:6px;display:none"></div>
-        </div>
+      <div id="auth-in" style="display:none">
+        <div style="font-size:12px;color:#9E7A68;margin-bottom:8px;text-align:center" id="auth-email-disp"></div>
+        <button class="abtn" id="btn-signout" onclick="doSignOut()" style="color:#E24B4A;border-color:#F7C1C1">サインアウト</button>
       </div>
     </div>
   </div>
   <div class="sl">言語 / Language</div>
+  <div class="ss"><div class="sr" style="border-radius:14px;border-bottom:none"><div class="si" style="background:#F5F0EC"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#9E7A68" stroke-width="1.2" fill="none"/><path d="M10 2c0 0-3 3-3 8s3 8 3 8M10 2c0 0 3 3 3 8s-3 8-3 8M2 10h16" stroke="#9E7A68" stroke-width="1.2"/></svg></div><div style="flex:1"><div class="sk">言語</div></div><div class="ls"><button class="lo on" id="lo-ja" onclick="setL('ja')">日本語</button><button class="lo" id="lo-en" onclick="setL('en')">English</button></div></div></div>
+  <div class="sl">通知 / データ</div>
   <div class="ss">
-    <div class="sr" style="border-radius:14px;border-bottom:none">
-      <div class="si" style="background:#F5F0EC"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#9E7A68" stroke-width="1.2" fill="none"/><path d="M10 2c0 0-3 3-3 8s3 8 3 8M10 2c0 0 3 3 3 8s-3 8-3 8M2 10h16" stroke="#9E7A68" stroke-width="1.2"/></svg></div>
-      <div style="flex:1"><div class="sk" id="s-ll">言語</div></div>
-      <div class="ls"><button class="lo on" id="lo-ja" onclick="setL('ja')">日本語</button><button class="lo" id="lo-en" onclick="setL('en')">English</button></div>
-    </div>
+    <div class="sr"><div class="si" style="background:#FBF3E3"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2a7 7 0 017 7v3l1.5 2H1.5L3 12V9a7 7 0 017-7z" fill="#B8841A"/><path d="M8 16a2 2 0 004 0" fill="#B8841A"/></svg></div><div style="flex:1"><div class="sk">毎朝のリマインダー</div><div class="sk2">07:00</div></div><button class="tg2 on" onclick="this.classList.toggle('on')"></button></div>
+    <div class="sr"><div class="si" style="background:var(--fp)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="13" rx="2" fill="#4A7A58"/><path d="M2 8h16" stroke="white" stroke-width="1.2"/></svg></div><div style="flex:1"><div class="sk">クラウドバックアップ</div><div class="sk2" id="s-bs">ログイン後に有効</div></div><button class="tg2" id="cloud-toggle"></button></div>
   </div>
-  <div class="sl" id="s-nl">通知 / データ</div>
-  <div class="ss">
-    <div class="sr">
-      <div class="si" style="background:#FBF3E3"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2a7 7 0 017 7v3l1.5 2H1.5L3 12V9a7 7 0 017-7z" fill="#B8841A"/><path d="M8 16a2 2 0 004 0" fill="#B8841A"/></svg></div>
-      <div style="flex:1"><div class="sk" id="s-rm">毎朝のリマインダー</div><div class="sk2">07:00</div></div>
-      <button class="tg2 on" onclick="this.classList.toggle('on')"></button>
-    </div>
-    <div class="sr">
-      <div class="si" style="background:var(--fp)"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="13" rx="2" fill="#4A7A58"/><path d="M2 8h16" stroke="white" stroke-width="1.2"/></svg></div>
-      <div style="flex:1"><div class="sk" id="s-bk">クラウドバックアップ</div><div class="sk2" id="s-bs">要ログイン</div></div>
-      <button class="tg2" onclick="this.classList.toggle('on')"></button>
-    </div>
-  </div>
-  <div class="ver" id="s-vr">鳩日記 v1.0.0 — Made with ♡ for peace</div>
+  <div class="ver">鳩日記 v1.0.0 — Made with ♡ for peace</div>
 </div></div>
-
 </div></div>
-
-<!-- BOTTOM NAV -->
 <nav class="bn">
-  <button class="nt on" id="nt0" onclick="go(0)">
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2 9L11 2l9 7v11h-6v-5H8v5H2V9z" fill="#9E7A68"/></svg>
-    <span class="nl" id="nv0">日記</span>
-  </button>
-  <button class="nt" id="nt1" onclick="go(1)">
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="3" width="18" height="16" rx="3" fill="#9E7A68"/><rect x="2" y="3" width="18" height="6" rx="3" fill="#FFF9F2"/><rect x="7" y="1" width="2" height="4" rx="1" fill="#9E7A68"/><rect x="13" y="1" width="2" height="4" rx="1" fill="#9E7A68"/></svg>
-    <span class="nl" id="nv1">カレンダー</span>
-  </button>
-  <button class="nt" id="nt2" onclick="go(2)">
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><ellipse cx="11" cy="15" rx="7" ry="5" fill="#9E7A68"/><ellipse cx="11" cy="11" rx="5" ry="4.5" fill="#9E7A68"/><circle cx="14.5" cy="9" r="2.5" fill="#FFF9F2"/></svg>
-    <span class="nl" id="nv2">図鑑</span>
-  </button>
-  <button class="nt" id="nt3" onclick="go(3)">
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" fill="#9E7A68"/><path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" fill="#9E7A68"/></svg>
-    <span class="nl" id="nv3">設定</span>
-  </button>
+  <button class="nt on" id="nt0" onclick="go(0)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M2 9L11 2l9 7v11h-6v-5H8v5H2V9z" fill="#9E7A68"/></svg><span class="nl" id="nv0">日記</span></button>
+  <button class="nt" id="nt1" onclick="go(1)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="3" width="18" height="16" rx="3" fill="#9E7A68"/><rect x="2" y="3" width="18" height="6" rx="3" fill="#FFF9F2"/><rect x="7" y="1" width="2" height="4" rx="1" fill="#9E7A68"/><rect x="13" y="1" width="2" height="4" rx="1" fill="#9E7A68"/></svg><span class="nl" id="nv1">カレンダー</span></button>
+  <button class="nt" id="nt2" onclick="go(2)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><ellipse cx="11" cy="15" rx="7" ry="5" fill="#9E7A68"/><ellipse cx="11" cy="11" rx="5" ry="4.5" fill="#9E7A68"/><circle cx="14.5" cy="9" r="2.5" fill="#FFF9F2"/></svg><span class="nl" id="nv2">図鑑</span></button>
+  <button class="nt" id="nt3" onclick="go(3)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" fill="#9E7A68"/><path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" fill="#9E7A68"/></svg><span class="nl" id="nv3">設定</span></button>
 </nav>
 </div>
-
 <script>
-/* ── 祝日 ── */
-const JH={'2025-01-01':'元日','2025-01-13':'成人の日','2025-02-11':'建国記念の日','2025-02-23':'天皇誕生日','2025-02-24':'振替休日','2025-03-20':'春分の日','2025-04-29':'昭和の日','2025-05-03':'憲法記念日','2025-05-04':'みどりの日','2025-05-05':'こどもの日','2025-05-06':'振替休日','2025-07-21':'海の日','2025-08-11':'山の日','2025-09-15':'敬老の日','2025-09-23':'秋分の日','2025-10-13':'スポーツの日','2025-11-03':'文化の日','2025-11-23':'勤労感謝の日','2025-11-24':'振替休日','2026-01-01':'元日','2026-01-12':'成人の日','2026-02-11':'建国記念の日','2026-02-23':'天皇誕生日','2026-03-20':'春分の日','2026-04-29':'昭和の日','2026-05-03':'憲法記念日','2026-05-04':'みどりの日','2026-05-05':'こどもの日','2026-05-06':'振替休日','2026-07-20':'海の日','2026-08-11':'山の日','2026-09-21':'敬老の日','2026-09-23':'秋分の日','2026-10-12':'スポーツの日','2026-11-03':'文化の日','2026-11-23':'勤労感謝の日'};
-
-/* ── 六曜 ── */
-const RKC=['#7A9E7A','#8B6E9E','#9E8B5A','#7A7A8E','#C4922A','#9E5A5A'];
-const RKB=['#EDF5ED','#F0EBF5','#F5F0E8','#EEEEF5','#FBF3E3','#F5EAED'];
-const RKT=['#3a6e3a','#6b4f8a','#7a6030','#4f4f8a','#8a6010','#7a3040'];
-function rki(y,m,d){if(m<=2){y--;m+=12;}const A=Math.floor(y/100),B=2-A+Math.floor(A/4),jd=Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524,fc=Math.floor((jd-2451550)/29.530588853),ld=Math.floor(jd-(2451550+fc*29.530588853))+1,lm=((fc%12)+12)%12+1;return(lm+ld)%6;}
-
-/* ── i18n ── */
-const L={
-  ja:{app:'鳩日記',add:'＋ 今日の鳩を記録する',sav:'記録する',upd:'更新する',
-    cnt:n=>`記録 ${n} 羽`,nav:['日記','カレンダー','図鑑','設定'],
-    dow:['日','月','火','水','木','金','土'],dowSfx:'曜日',fl:'今日の一言',
-    rn:['先勝','友引','先負','仏滅','大安','赤口'],
-    rr:['せんしょう','ともびき','せんぷ','ぶつめつ','たいあん','しゃっこう'],
-    rl:['午前中 吉','終日 おおむね吉','午後 吉','終日 注意','終日 大吉','正午のみ 吉'],
-    ft:['午前中に翼を広げよう','縁ある鳩に出会える日','焦らず静かに待つべし','鳩の羽音に耳を澄ませ','今日の鳩は平和の最高の使者','正午の空に鳩が舞う'],
-    db:d=>`${d.getMonth()+1}月${d.getDate()}日`,dy:d=>`${d.getFullYear()}年`,
-    tbdt:d=>`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`,
-    cm:(y,m)=>`${y}年${m}月`,hll:'今月の祝日',noh:'祝日なし',
-    sd:(y,m,d)=>`${y}年${m}月${d}日`,mk:'ja',
-    bn:['ドバト','アオバト'],bm:n=>`遭遇 ${n}回`,
-    bd:['日本全国の都市部に広く生息する最もポピュラーな鳩。家畜化されたイエバトが野生化したもの。グレーの羽に虹色の首元が特徴。','日本固有種の鳩。黄緑色と紫がかった美しい羽が特徴。海岸の岩場で海水を飲む珍しい習性を持つ。'],
-    bh:['鳩日記でもっとも出会いやすい鳥。公園・駅前・川沿いなどどこにでも現れます。','ドバトより出会いにくいレアな鳩。発見できたら大吉のしるし。'],
-    zbk:'図鑑に戻る',lk:'全長',mk2:'遭遇',rk:'レア度',el:'生態',rl2:'鳩日記との関係',
-    al:'アカウント',gu:'ゲストユーザー',gs:'ログインするとデータが安全に保存されます',
-    gg:'Googleでサインイン',ap:'Appleでサインイン',or:'または',em:'メールアドレスで登録',
-    ll:'言語',nl:'通知 / データ',rm:'毎朝のリマインダー',bk:'クラウドバックアップ',bs:'要ログイン',
-    vr:'鳩日記 v1.0.0 — Made with ♡ for peace',sp:'鳥の名前で検索...',sh:true,
-    aiR:['この鳥かな？'],aiL:'AI識別中...',
-    e1d:d=>`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日 ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`,
-    fttl_new:'新しい記録',fttl_edit:'記録を編集',
-    del_confirm:'この記録を削除しますか？この操作は取り消せません。',
-    del_yes:'削除する',del_no:'キャンセル',
-    loc_ph:'場所を選択（タップで地図を開く）',
-    memo_ph:'今日の鳩のことを書いてみよう',
-    memo_lbl:'メモ（100字まで）',
-  },
-  en:{app:'Pigeon Diary',add:"＋ Record today's pigeon",sav:'Save',upd:'Update',
-    cnt:n=>`${n} entries`,nav:['Diary','Calendar','Field Guide','Settings'],
-    dow:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],dowSfx:'',fl:"Today's fortune",
-    rn:['Sen-shō','Tomobiki','Sen-pu','Butsumetsu','Taian','Shakku'],
-    rr:['先勝','友引','先負','仏滅','大安','赤口'],
-    rl:['Morning: Lucky','All day: Mostly Lucky','Afternoon: Lucky','All day: Caution','All day: Great Fortune','Noon only: Lucky'],
-    ft:['Spread your wings early','A day to find allies','Wait patiently','Listen for wings of peace','Best messenger today','A pigeon soars at noon'],
-    db:d=>`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]} ${d.getDate()}`,
-    dy:d=>`${d.getFullYear()}`,
-    tbdt:d=>`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`,
-    cm:(y,m)=>`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m-1]} ${y}`,
-    hll:'This month',noh:'No holidays shown in English mode',
-    sd:(y,m,d)=>`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m-1]} ${d}, ${y}`,mk:'en',
-    bn:['Rock Pigeon','Green Pigeon'],bm:n=>`Seen ${n}x`,
-    bd:['The most common pigeon in urban Japan. Descended from domesticated Rock Doves, with gray plumage and iridescent neck.','A Japanese endemic pigeon with beautiful yellow-green and purple plumage. Famous for drinking seawater at coastlines.'],
-    bh:['The easiest bird to find in Pigeon Diary. Shows up in parks, stations, and riversides everywhere.','Rarer than the Rock Pigeon. Spotting one is a sign of great luck.'],
-    zbk:'Back to Field Guide',lk:'Length',mk2:'Seen',rk:'Rarity',el:'Ecology',rl2:'About this species',
-    al:'Account',gu:'Guest User',gs:'Sign in to safely back up your data',
-    gg:'Sign in with Google',ap:'Sign in with Apple',or:'or',em:'Sign up with Email',
-    ll:'Language',nl:'Notifications / Data',rm:'Daily reminder',bk:'Auto cloud backup',bs:'Login required',
-    vr:'Pigeon Diary v1.0.0 — Made with ♡ for peace',sp:'Search by bird name...',sh:false,
-    aiR:["What's this bird?"],aiL:'Identifying...',
-    e1d:d=>`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`,
-    fttl_new:'New Entry',fttl_edit:'Edit Entry',
-    del_confirm:'Delete this entry? This cannot be undone.',
-    del_yes:'Delete',del_no:'Cancel',
-    loc_ph:'Select location (tap to open map)',
-    memo_ph:"Write about today's pigeon",
-    memo_lbl:'Memo (up to 100 chars)',
+/* ── SUPABASE初期化 ── */
+var sb=null;
+try{
+  if(typeof supabase!=='undefined'&&supabase.createClient){
+    sb=supabase.createClient(window._SUPA_URL,window._SUPA_KEY);
   }
-};
-let lang='ja';
-const t=()=>L[lang];
+}catch(e){console.warn('Supabase init failed:',e);}
 
-/* ── STORAGE ── */
-const SK='hato-v1';
-let entries=[];
-function load(){try{const r=localStorage.getItem(SK);if(r)entries=JSON.parse(r);}catch(e){entries=[];}renderEntries();}
-function save(){try{localStorage.setItem(SK,JSON.stringify(entries));}catch(e){}}
+/* ── 祝日 ── */
+var JH={'2025-01-01':'元日','2025-01-13':'成人の日','2025-02-11':'建国記念の日','2025-02-23':'天皇誕生日','2025-02-24':'振替休日','2025-03-20':'春分の日','2025-04-29':'昭和の日','2025-05-03':'憲法記念日','2025-05-04':'みどりの日','2025-05-05':'こどもの日','2025-05-06':'振替休日','2025-07-21':'海の日','2025-08-11':'山の日','2025-09-15':'敬老の日','2025-09-23':'秋分の日','2025-10-13':'スポーツの日','2025-11-03':'文化の日','2025-11-23':'勤労感謝の日','2025-11-24':'振替休日','2026-01-01':'元日','2026-01-12':'成人の日','2026-02-11':'建国記念の日','2026-02-23':'天皇誕生日','2026-03-20':'春分の日','2026-04-29':'昭和の日','2026-05-03':'憲法記念日','2026-05-04':'みどりの日','2026-05-05':'こどもの日','2026-05-06':'振替休日','2026-07-20':'海の日','2026-08-11':'山の日','2026-09-21':'敬老の日','2026-09-23':'秋分の日','2026-10-12':'スポーツの日','2026-11-03':'文化の日','2026-11-23':'勤労感謝の日'};
+var RKC=['#7A9E7A','#8B6E9E','#9E8B5A','#7A7A8E','#C4922A','#9E5A5A'];
+var RKB=['#EDF5ED','#F0EBF5','#F5F0E8','#EEEEF5','#FBF3E3','#F5EAED'];
+var RKT=['#3a6e3a','#6b4f8a','#7a6030','#4f4f8a','#8a6010','#7a3040'];
+function rki(y,m,d){if(m<=2){y--;m+=12;}var A=Math.floor(y/100),B=2-A+Math.floor(A/4),jd=Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524,fc=Math.floor((jd-2451550)/29.530588853),ld=Math.floor(jd-(2451550+fc*29.530588853))+1,lm=((fc%12)+12)%12+1;return(lm+ld)%6;}
 
-/* ── STATE ── */
-let editId=null,curPhoto=null,curLat=null,curLng=null,curLocLabel=null,selBird='',mapOpen=false,leafMap=null,leafMarker=null;
+/* ── State ── */
+var entries=[],currentUser=null,editId=null,lang='ja';
+var curPhoto=null,curLat=null,curLng=null,curLocLabel=null,selBird='';
+var mapOpen=false,leafMap=null,leafMarker=null;
+var RNJ=['先勝','友引','先負','仏滅','大安','赤口'];
+var RRJ=['せんしょう','ともびき','せんぷ','ぶつめつ','たいあん','しゃっこう'];
+var RLJ=['午前中 吉','終日 おおむね吉','午後 吉','終日 注意','終日 大吉','正午のみ 吉'];
+var FTJ=['午前中に翼を広げよう','縁ある鳩に出会える日','焦らず静かに待つべし','鳩の羽音に耳を澄ませ','今日の鳩は平和の最高の使者','正午の空に鳩が舞う'];
+var DOWJ=['日','月','火','水','木','金','土'];
 
-/* ── ROKUYO INIT ── */
+/* ── AUTH ── */
+function doSignInGoogle(){
+  if(!sb){alert('Supabaseが読み込めていません。ページを再読み込みしてください。');return;}
+  sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.href}}).then(function(r){if(r.error)showAM(r.error.message);});
+}
+function doSignInEmail(){
+  if(!sb){alert('Supabaseが読み込めていません。');return;}
+  var em=document.getElementById('auth-email').value.trim();
+  var pw=document.getElementById('auth-pass').value;
+  if(!em||!pw){showAM('メールとパスワードを入力してください');return;}
+  sb.auth.signInWithPassword({email:em,password:pw}).then(function(r){
+    if(r.error)showAM('メールまたはパスワードが違います');else hideAM();
+  });
+}
+function doSignUpEmail(){
+  if(!sb){alert('Supabaseが読み込めていません。');return;}
+  var em=document.getElementById('auth-email').value.trim();
+  var pw=document.getElementById('auth-pass').value;
+  if(!em||!pw){showAM('メールとパスワードを入力してください');return;}
+  if(pw.length<6){showAM('パスワードは6文字以上にしてください');return;}
+  sb.auth.signUp({email:em,password:pw}).then(function(r){
+    if(r.error)showAM(r.error.message);
+    else showAM('確認メールを送りました。メールを確認してください。');
+  });
+}
+function doSignOut(){
+  if(!sb)return;
+  sb.auth.signOut();
+}
+function showAM(m){var el=document.getElementById('auth-msg');el.textContent=m;el.style.display='block';}
+function hideAM(){document.getElementById('auth-msg').style.display='none';}
+
+function updateAuthUI(){
+  var u=currentUser;
+  document.getElementById('auth-out').style.display=u?'none':'block';
+  document.getElementById('auth-in').style.display=u?'block':'none';
+  document.getElementById('s-gu').textContent=u?'ログイン中':'ゲストユーザー';
+  document.getElementById('s-gs').textContent=u?(u.email||'ソーシャルログイン'):'ログインするとデータが安全に保存されます';
+  if(u)document.getElementById('auth-email-disp').textContent=u.email||'';
+  var ct=document.getElementById('cloud-toggle');
+  if(u)ct.classList.add('on');else ct.classList.remove('on');
+}
+
+/* ── 六曜カード ── */
 function initRk(){
-  const now=new Date(),T=t(),idx=rki(now.getFullYear(),now.getMonth()+1,now.getDate());
+  var now=new Date(),idx=rki(now.getFullYear(),now.getMonth()+1,now.getDate());
   document.getElementById('rk-card').style.borderLeftColor=RKC[idx];
-  document.getElementById('rk-db').textContent=T.db(now);
-  document.getElementById('rk-yr').textContent=T.dy(now);
-  document.getElementById('rk-dw').textContent=T.dow[now.getDay()]+T.dowSfx;
-  document.getElementById('rk-nm').textContent=T.rn[idx];
-  document.getElementById('rk-rd').textContent=T.rr[idx];
-  document.getElementById('rk-fl').textContent=T.fl;
-  document.getElementById('rk-ft').textContent=T.ft[idx];
-  const lk=document.getElementById('rk-lk');
-  lk.textContent=T.rl[idx];lk.style.background=RKB[idx];lk.style.color=RKT[idx];
-  document.getElementById('tb-t').textContent=T.app;
-  document.getElementById('tb-d').textContent=T.tbdt(now);
+  document.getElementById('rk-db').textContent=(now.getMonth()+1)+'月'+now.getDate()+'日';
+  document.getElementById('rk-yr').textContent=now.getFullYear()+'年';
+  document.getElementById('rk-dw').textContent=DOWJ[now.getDay()]+'曜日';
+  document.getElementById('rk-nm').textContent=RNJ[idx];
+  document.getElementById('rk-rd').textContent=RRJ[idx];
+  document.getElementById('rk-fl').textContent='今日の一言';
+  document.getElementById('rk-ft').textContent=FTJ[idx];
+  var lk=document.getElementById('rk-lk');
+  lk.textContent=RLJ[idx];lk.style.background=RKB[idx];lk.style.color=RKT[idx];
+  document.getElementById('tb-t').textContent='鳩日記';
+  document.getElementById('tb-d').textContent=now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日';
 }
 
 /* ── ENTRIES ── */
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function fmtD(d){return d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日 '+pad(d.getHours())+':'+pad(d.getMinutes());}
+function pad(n){return n<10?'0'+n:n;}
+
 function renderEntries(){
-  const T=t(),el=document.getElementById('elist');
-  document.getElementById('cnt-lbl').textContent=T.cnt(entries.length);
-  // update zukan counts
-  const hato=entries.filter(e=>e.bird==='ドバト'||e.bird==='Rock Pigeon').length;
-  const ao=entries.filter(e=>e.bird==='アオバト'||e.bird==='Green Pigeon').length;
-  document.getElementById('b0m').textContent=T.bm(hato);
-  document.getElementById('b1m').textContent=T.bm(ao);
-  if(!entries.length){el.innerHTML=`<div style="text-align:center;padding:2rem 1rem;color:#9E7A68"><svg width="52" height="52" viewBox="0 0 48 48" fill="none" style="display:block;margin:0 auto 10px"><ellipse cx="24" cy="31" rx="14" ry="10" fill="#C8DEC8"/><ellipse cx="24" cy="25" rx="9" ry="8" fill="#4A7A58"/><circle cx="30" cy="22" r="4" fill="#2E5C3A"/><circle cx="31.5" cy="20.5" r="1.2" fill="white"/><path d="M33 22.5L38 21 37 24Z" fill="#D4904A"/></svg><p style="font-size:14px;line-height:1.9">${lang==='ja'?'まだ記録がありません<br>今日出会った鳩を記録しましょう':'No entries yet.<br>Record your first pigeon!'}</p></div>`;return;}
-  el.innerHTML=[...entries].reverse().map(e=>{
-    const d=new Date(e.date),idx=rki(d.getFullYear(),d.getMonth()+1,d.getDate()),hol=T.sh?JH[e.date.slice(0,10)]:null;
-    const isAo=e.bird&&(e.bird.includes('アオ')||e.bird.includes('Green'));
-    const thumb=e.photo?`<img src="${e.photo}" style="width:100%;height:100%;object-fit:cover" alt="">`:`<svg width="34" height="34" viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="31" rx="14" ry="10" fill="${isAo?'#D4C8E8':'#C8DEC8'}"/><ellipse cx="24" cy="25" rx="9" ry="8" fill="${isAo?'#9E87C8':'#4A7A58'}"/><circle cx="30" cy="22" r="4" fill="${isAo?'#7A68A8':'#2E5C3A'}"/><circle cx="31.5" cy="20.5" r="1.2" fill="white"/><path d="M33 22.5L38 21 37 24Z" fill="#D4904A"/></svg>`;
-    return`<div class="card ec"><div class="et" style="background:${isAo?'#F0EBF5':'#EDF5ED'}">${thumb}</div><div class="ei"><div class="ed">${T.e1d(d)}</div>${e.locLabel?`<div class="eloc">📍 ${esc(e.locLabel)}</div>`:''}<div class="em">${esc(e.msg||'今日もいい1日でありますように')}</div><div><span class="tg" style="border-color:${RKC[idx]};color:${RKT[idx]};background:${RKB[idx]}">${T.rn[idx]}</span>${e.bird?`<span class="tg" style="border-color:#4A7A58;color:#2E5C3A;background:#E6F2EA">${esc(e.bird)}</span>`:''} ${hol?`<span class="tg" style="border-color:#E24B4A;color:#A32D2D;background:#FCEBEB">${hol}</span>`:''}</div></div><button class="edit-btn" onclick="openForm(${e.id})">✎</button></div>`;
+  var el=document.getElementById('elist');
+  document.getElementById('cnt-lbl').textContent='記録 '+entries.length+' 羽';
+  var hato=entries.filter(function(e){return e.bird&&(e.bird.indexOf('ドバ')>-1||e.bird.indexOf('Rock')>-1);}).length;
+  var ao=entries.filter(function(e){return e.bird&&(e.bird.indexOf('アオ')>-1||e.bird.indexOf('Green')>-1);}).length;
+  document.getElementById('b0m').textContent='遭遇 '+hato+'回';
+  document.getElementById('b1m').textContent='遭遇 '+ao+'回';
+  if(!entries.length){el.innerHTML='<div style="text-align:center;padding:2rem 1rem;color:#9E7A68"><p style="font-size:14px;line-height:1.9">まだ記録がありません<br>今日出会った鳩を記録しましょう</p></div>';return;}
+  el.innerHTML=entries.map(function(e){
+    var d=new Date(e.date),idx=rki(d.getFullYear(),d.getMonth()+1,d.getDate()),hol=JH[e.date.slice(0,10)]||null;
+    var isAo=e.bird&&(e.bird.indexOf('アオ')>-1||e.bird.indexOf('Green')>-1);
+    var thumb=e.photo?'<img src="'+e.photo+'" style="width:100%;height:100%;object-fit:cover" alt="">':'<svg width="34" height="34" viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="31" rx="14" ry="10" fill="'+(isAo?'#D4C8E8':'#C8DEC8')+'"/><ellipse cx="24" cy="25" rx="9" ry="8" fill="'+(isAo?'#9E87C8':'#4A7A58')+'"/></svg>';
+    return '<div class="card ec"><div class="et" style="background:'+(isAo?'#F0EBF5':'#EDF5ED')+'">'+thumb+'</div><div class="ei"><div class="ed">'+fmtD(d)+'</div>'+(e.locLabel?'<div class="eloc">📍 '+esc(e.locLabel)+'</div>':'')+'<div class="em">'+esc(e.msg||'今日もいい1日でありますように')+'</div><div><span class="tg" style="border-color:'+RKC[idx]+';color:'+RKT[idx]+';background:'+RKB[idx]+'">'+RNJ[idx]+'</span>'+(e.bird?'<span class="tg" style="border-color:#4A7A58;color:#2E5C3A;background:#E6F2EA">'+esc(e.bird)+'</span>':'')+(hol?'<span class="tg" style="border-color:#E24B4A;color:#A32D2D;background:#FCEBEB">'+hol+'</span>':'')+'</div></div><button class="edit-btn" onclick="openForm(\''+e.id+'\')">✎</button></div>';
   }).join('');
 }
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* ── STORAGE ── */
+var SK='hato-v1';
+function loadLocal(){try{var r=localStorage.getItem(SK);if(r)entries=JSON.parse(r);}catch(e){entries=[];}renderEntries();}
+function saveLocal(){try{localStorage.setItem(SK,JSON.stringify(entries));}catch(e){}}
+
+function loadEntries(){
+  if(currentUser&&sb){
+    document.getElementById('sync-banner').classList.add('on');
+    sb.from('entries').select('*').eq('user_id',currentUser.id).order('date',{ascending:false}).then(function(res){
+      document.getElementById('sync-banner').classList.remove('on');
+      if(!res.error&&res.data){
+        entries=res.data.map(function(r){return{id:r.id,date:r.date,msg:r.msg,photo:r.photo,lat:r.lat,lng:r.lng,locLabel:r.loc_label,bird:r.bird};});
+        renderEntries();
+      }
+    });
+  } else {
+    loadLocal();
+  }
+}
 
 /* ── FORM ── */
 function openForm(id){
   editId=id;
-  const e=id?entries.find(x=>x.id===id):null;
-  const T=t();
-  document.getElementById('fttl').textContent=id?T.fttl_edit:T.fttl_new;
+  var e=id?entries.find(function(x){return String(x.id)===String(id);}):null;
+  document.getElementById('fttl').textContent=id?'記録を編集':'新しい記録';
   document.getElementById('fdel').style.display=id?'block':'none';
   document.getElementById('delconf').classList.remove('on');
   document.getElementById('ai-box').classList.remove('on');
   document.getElementById('ai-body').innerHTML='';
-  document.getElementById('ai-ttl').textContent=T.aiL;
-  const now=new Date();
-  document.getElementById('f-date').value=e?e.date.slice(0,10):`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-  document.getElementById('f-time').value=e?e.date.slice(11,16):`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  var now=new Date();
+  document.getElementById('f-date').value=e?e.date.slice(0,10):now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
+  document.getElementById('f-time').value=e?e.date.slice(11,16):pad(now.getHours())+':'+pad(now.getMinutes());
   curPhoto=e&&e.photo?e.photo:null;
   curLat=e?e.lat:null;curLng=e?e.lng:null;curLocLabel=e?e.locLabel:null;
   selBird=e&&e.bird?e.bird:'';
-  const prev=document.getElementById('f-prev'),pp=document.getElementById('pp');
+  var prev=document.getElementById('f-prev'),pp=document.getElementById('pp');
   if(curPhoto){prev.src=curPhoto;prev.style.display='block';pp.style.display='none';}
   else{prev.style.display='none';pp.style.display='block';}
-  document.getElementById('loc-txt').textContent=curLocLabel||T.loc_ph;
+  document.getElementById('loc-txt').textContent=curLocLabel||'場所を選択（タップで地図を開く）';
   document.getElementById('loc-txt').className='loc-txt'+(curLocLabel?' set':'');
   document.getElementById('f-ta').value=e?e.msg:'';
-  document.getElementById('fsav').textContent=id?T.upd:T.sav;
+  document.getElementById('fsav').textContent=id?'更新する':'記録する';
   document.getElementById('f-file').value='';
-  // close map if open
   mapOpen=false;
   document.getElementById('map-picker').classList.remove('open');
   document.getElementById('loc-chev').classList.remove('open');
@@ -607,25 +470,29 @@ function openForm(id){
   document.getElementById('hl').classList.add('pushed');
   document.getElementById('hform').classList.add('on');
 }
-function closeForm(){
-  document.getElementById('hform').classList.remove('on');
-  document.getElementById('hl').classList.remove('pushed');
-  editId=null;
-}
+function closeForm(){document.getElementById('hform').classList.remove('on');document.getElementById('hl').classList.remove('pushed');editId=null;}
 function showDel(){document.getElementById('delconf').classList.add('on');}
 function hideDel(){document.getElementById('delconf').classList.remove('on');}
-function doDelete(){entries=entries.filter(x=>x.id!==editId);save();renderEntries();closeForm();}
+function doDelete(){
+  if(currentUser&&sb){
+    sb.from('entries').delete().eq('id',editId).eq('user_id',currentUser.id).then(function(){loadEntries();});
+  } else {
+    entries=entries.filter(function(x){return String(x.id)!==String(editId);});
+    saveLocal();renderEntries();
+  }
+  closeForm();
+}
 
 /* ── PHOTO + AI ── */
-document.getElementById('pz').addEventListener('click',()=>document.getElementById('f-file').click());
-document.getElementById('f-file').addEventListener('change',e=>{
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>{
-    const img=new Image();
-    img.onload=()=>{
-      const MAX=1200,cv=document.createElement('canvas');
-      let w=img.width,h=img.height;
+document.getElementById('pz').addEventListener('click',function(){document.getElementById('f-file').click();});
+document.getElementById('f-file').addEventListener('change',function(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(ev){
+    var img=new Image();
+    img.onload=function(){
+      var MAX=1200,cv=document.createElement('canvas');
+      var w=img.width,h=img.height;
       if(w>MAX||h>MAX){if(w>h){h=Math.round(h*MAX/w);w=MAX;}else{w=Math.round(w*MAX/h);h=MAX;}}
       cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);
       curPhoto=cv.toDataURL('image/jpeg',.82);
@@ -636,26 +503,25 @@ document.getElementById('f-file').addEventListener('change',e=>{
     };img.src=ev.target.result;
   };r.readAsDataURL(f);
 });
-function trigAI(){/* handled by click→file input */}
-const AI_RESULTS=[
-  [{nm:'ドバト',en:'Rock Pigeon',sc:'Columba livia',pct:84,color:'#4A7A58'},{nm:'カワラバト',en:'Feral Pigeon',sc:'Columba livia var.',pct:10,color:'#7A9E7A'},{nm:'アオバト',en:'Green Pigeon',sc:'Treron sieboldii',pct:6,color:'#9E87C8'}],
-  [{nm:'アオバト',en:'Green Pigeon',sc:'Treron sieboldii',pct:78,color:'#9E87C8'},{nm:'キジバト',en:'Oriental Turtle-Dove',sc:'Streptopelia orientalis',pct:14,color:'#9E8B5A'},{nm:'ドバト',en:'Rock Pigeon',sc:'Columba livia',pct:8,color:'#4A7A58'}],
-  [{nm:'ドバト',en:'Rock Pigeon',sc:'Columba livia',pct:91,color:'#4A7A58'},{nm:'キジバト',en:'Oriental Turtle-Dove',sc:'Streptopelia orientalis',pct:7,color:'#9E8B5A'},{nm:'アオバト',en:'Green Pigeon',sc:'Treron sieboldii',pct:2,color:'#9E87C8'}],
+var AI_RESULTS=[
+  [{nm:'ドバト',sc:'Columba livia',pct:84,color:'#4A7A58'},{nm:'カワラバト',sc:'Columba livia var.',pct:10,color:'#7A9E7A'},{nm:'アオバト',sc:'Treron sieboldii',pct:6,color:'#9E87C8'}],
+  [{nm:'アオバト',sc:'Treron sieboldii',pct:78,color:'#9E87C8'},{nm:'キジバト',sc:'Streptopelia orientalis',pct:14,color:'#9E8B5A'},{nm:'ドバト',sc:'Columba livia',pct:8,color:'#4A7A58'}],
+  [{nm:'ドバト',sc:'Columba livia',pct:91,color:'#4A7A58'},{nm:'キジバト',sc:'Streptopelia orientalis',pct:7,color:'#9E8B5A'},{nm:'アオバト',sc:'Treron sieboldii',pct:2,color:'#9E87C8'}],
 ];
 function runAI(){
-  const box=document.getElementById('ai-box');
+  var box=document.getElementById('ai-box');
   box.classList.add('on');
-  document.getElementById('ai-ttl').textContent=t().aiL;
-  document.getElementById('ai-body').innerHTML=`<div class="ai-loading"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" style="animation:spin 1s linear infinite;vertical-align:middle;margin-right:6px"><circle cx="10" cy="10" r="8" stroke="#E8D8CC" stroke-width="2"/><path d="M10 2a8 8 0 018 8" stroke="#4A7A58" stroke-width="2" stroke-linecap="round"/></svg>${t().aiL}</div>`;
+  document.getElementById('ai-ttl').textContent='AI識別中...';
+  document.getElementById('ai-body').innerHTML='<div class="ai-loading">識別中...</div>';
   selBird='';
-  setTimeout(()=>{
-    const res=AI_RESULTS[Math.floor(Math.random()*AI_RESULTS.length)];
-    document.getElementById('ai-ttl').textContent=t().aiR[0];
-    document.getElementById('ai-body').innerHTML=res.map((r,i)=>`<div class="ai-row${i===0?' sel':''}" onclick="selBirdFn(${i},'${lang==='ja'?r.nm:r.en}')"><span class="ai-chk">✓</span><div style="flex:1"><div class="ai-nm">${lang==='ja'?r.nm:r.en}</div><div class="ai-sc">${r.sc}</div></div><div class="ai-bar-w"><div class="ai-bar" style="width:${r.pct}%;background:${r.color}"></div></div><div class="ai-pct">${r.pct}%</div></div>`).join('');
-    selBirdFn(0,lang==='ja'?res[0].nm:res[0].en);
+  setTimeout(function(){
+    var res=AI_RESULTS[Math.floor(Math.random()*AI_RESULTS.length)];
+    document.getElementById('ai-ttl').textContent='この鳥かな？';
+    document.getElementById('ai-body').innerHTML=res.map(function(r,i){return '<div class="ai-row'+(i===0?' sel':'')+'" onclick="selBirdFn('+i+',\''+r.nm+'\')"><span class="ai-chk">✓</span><div style="flex:1"><div class="ai-nm">'+r.nm+'</div><div class="ai-sc">'+r.sc+'</div></div><div class="ai-bar-w"><div class="ai-bar" style="width:'+r.pct+'%;background:'+r.color+'"></div></div><div class="ai-pct">'+r.pct+'%</div></div>';}).join('');
+    selBirdFn(0,res[0].nm);
   },1800);
 }
-function selBirdFn(i,nm){selBird=nm;document.querySelectorAll('.ai-row').forEach((r,j)=>r.classList.toggle('sel',j===i));}
+function selBirdFn(i,nm){selBird=nm;document.querySelectorAll('.ai-row').forEach(function(r,j){r.classList.toggle('sel',j===i);});}
 
 /* ── MAP ── */
 function toggleMap(){
@@ -663,215 +529,181 @@ function toggleMap(){
   document.getElementById('map-picker').classList.toggle('open',mapOpen);
   document.getElementById('loc-chev').classList.toggle('open',mapOpen);
   document.getElementById('loc-toggle').classList.toggle('open',mapOpen);
-  if(mapOpen){
-    setTimeout(()=>{
-      if(!leafMap)initMap(35.5309,139.7029);
-      else leafMap.invalidateSize();
-    },360);
-  }
+  if(mapOpen){setTimeout(function(){if(!leafMap)initMap(35.5309,139.7029);else leafMap.invalidateSize();},360);}
 }
 function initMap(lat,lng){
   leafMap=L.map('mapbox',{zoomControl:true}).setView([lat,lng],15);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:19}).addTo(leafMap);
-  const icon=L.divIcon({className:'',html:`<div style="width:30px;height:30px;background:#4A7A58;border:3px solid white;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center"><div style="transform:rotate(45deg);font-size:12px">🕊️</div></div>`,iconSize:[30,30],iconAnchor:[15,30]});
+  var icon=L.divIcon({className:'',html:'<div style="width:28px;height:28px;background:#4A7A58;border:3px solid white;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 6px rgba(0,0,0,.3)"></div>',iconSize:[28,28],iconAnchor:[14,28]});
   leafMarker=L.marker([lat,lng],{draggable:true,icon}).addTo(leafMap);
-  leafMarker.on('dragend',()=>{const p=leafMarker.getLatLng();revGeo(p.lat,p.lng);});
-  leafMap.on('click',e=>{leafMarker.setLatLng(e.latlng);revGeo(e.latlng.lat,e.latlng.lng);});
+  leafMarker.on('dragend',function(){var p=leafMarker.getLatLng();revGeo(p.lat,p.lng);});
+  leafMap.on('click',function(e){leafMarker.setLatLng(e.latlng);revGeo(e.latlng.lat,e.latlng.lng);});
   revGeo(lat,lng);
 }
 function flyToGPS(){
-  const btn=document.getElementById('map-gps-btn');
-  btn.textContent='...';btn.disabled=true;
-  if(!navigator.geolocation){btn.textContent=lang==='ja'?'現在地':'GPS';btn.disabled=false;return;}
-  navigator.geolocation.getCurrentPosition(p=>{
-    const{latitude:la,longitude:lo}=p.coords;
-    if(!leafMap)initMap(la,lo);
-    else{leafMap.flyTo([la,lo],16,{duration:1.2});leafMarker.setLatLng([la,lo]);revGeo(la,lo);}
-    btn.textContent=lang==='ja'?'現在地':'GPS';btn.disabled=false;
-  },()=>{btn.textContent=lang==='ja'?'現在地':'GPS';btn.disabled=false;},{timeout:10000,enableHighAccuracy:true});
+  var btn=document.getElementById('map-gps-btn');btn.textContent='...';btn.disabled=true;
+  if(!navigator.geolocation){btn.textContent='現在地';btn.disabled=false;return;}
+  navigator.geolocation.getCurrentPosition(function(p){
+    var la=p.coords.latitude,lo=p.coords.longitude;
+    if(!leafMap)initMap(la,lo);else{leafMap.flyTo([la,lo],16,{duration:1.2});leafMarker.setLatLng([la,lo]);revGeo(la,lo);}
+    btn.textContent='現在地';btn.disabled=false;
+  },function(){btn.textContent='現在地';btn.disabled=false;},{timeout:10000,enableHighAccuracy:true});
 }
 function revGeo(lat,lng){
-  const addr=document.getElementById('map-addr');
-  addr.textContent=lang==='ja'?'住所を取得中...':'Getting address...';
-  fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=ja`)
-    .then(r=>r.json()).then(d=>{
-      const a=d.address||{};
-      const parts=[a.county||a.city||a.town||a.village,a.suburb||a.neighbourhood,a.road].filter(Boolean);
-      const label=parts.length?parts.join(' '):d.display_name?.split(',').slice(0,2).join(',');
-      addr.textContent=label||`${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-      curLat=lat;curLng=lng;curLocLabel=label||`${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-    }).catch(()=>{
-      const label=`${lat.toFixed(4)}°N, ${Math.abs(lng).toFixed(4)}°E`;
-      addr.textContent=label;curLat=lat;curLng=lng;curLocLabel=label;
-    });
+  var addr=document.getElementById('map-addr');addr.textContent='住所を取得中...';
+  fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lng+'&format=json&accept-language=ja')
+    .then(function(r){return r.json();}).then(function(d){
+      var a=d.address||{};
+      var parts=[a.county||a.city||a.town||a.village,a.suburb||a.neighbourhood,a.road].filter(Boolean);
+      var label=parts.length?parts.join(' '):(d.display_name||'').split(',').slice(0,2).join(',');
+      addr.textContent=label||lat.toFixed(4)+', '+lng.toFixed(4);
+      curLat=lat;curLng=lng;curLocLabel=label||lat.toFixed(4)+', '+lng.toFixed(4);
+    }).catch(function(){var label=lat.toFixed(4)+'°N, '+Math.abs(lng).toFixed(4)+'°E';addr.textContent=label;curLat=lat;curLng=lng;curLocLabel=label;});
 }
 function confirmLoc(){
   if(!curLocLabel)return;
-  const txt=document.getElementById('loc-txt');
-  txt.textContent=curLocLabel;txt.className='loc-txt set';
+  var txt=document.getElementById('loc-txt');txt.textContent=curLocLabel;txt.className='loc-txt set';
   mapOpen=false;
   document.getElementById('map-picker').classList.remove('open');
   document.getElementById('loc-chev').classList.remove('open');
   document.getElementById('loc-toggle').classList.remove('open');
 }
-
-/* ── CHAR COUNTER ── */
-function updC(){const n=document.getElementById('f-ta').value.length,c=document.getElementById('f-ctr');c.textContent=`${n} / 100`;c.classList.toggle('w',n>=90);}
+function updC(){var n=document.getElementById('f-ta').value.length,c=document.getElementById('f-ctr');c.textContent=n+' / 100';c.classList.toggle('w',n>=90);}
 
 /* ── SAVE ── */
 function saveEntry(){
-  const date=document.getElementById('f-date').value;
-  const time=document.getElementById('f-time').value;
-  const msg=document.getElementById('f-ta').value.trim();
-  const iso=`${date}T${time}:00`;
-  if(editId){
-    const idx=entries.findIndex(x=>x.id===editId);
-    if(idx>-1)entries[idx]={...entries[idx],date:iso,locLabel:curLocLabel||entries[idx].locLabel,lat:curLat||entries[idx].lat,lng:curLng||entries[idx].lng,msg:msg||entries[idx].msg,bird:selBird||entries[idx].bird,photo:curPhoto||entries[idx].photo};
-  }else{
-    entries.unshift({id:Date.now(),date:iso,photo:curPhoto,lat:curLat,lng:curLng,locLabel:curLocLabel,bird:selBird,msg:msg||'今日もいい1日でありますように'});
+  var date=document.getElementById('f-date').value;
+  var time=document.getElementById('f-time').value;
+  var msg=document.getElementById('f-ta').value.trim()||'今日もいい1日でありますように';
+  var iso=date+'T'+time+':00';
+  if(currentUser&&sb){
+    document.getElementById('sync-banner').classList.add('on');
+    if(editId){
+      sb.from('entries').update({date:iso,msg:msg,photo:curPhoto,lat:curLat,lng:curLng,loc_label:curLocLabel,bird:selBird||null}).eq('id',editId).eq('user_id',currentUser.id).then(function(){loadEntries();});
+    } else {
+      sb.from('entries').insert({user_id:currentUser.id,date:iso,msg:msg,photo:curPhoto,lat:curLat,lng:curLng,loc_label:curLocLabel,bird:selBird||null}).then(function(){loadEntries();});
+    }
+  } else {
+    if(editId){
+      var idx=entries.findIndex(function(x){return String(x.id)===String(editId);});
+      if(idx>-1)entries[idx]=Object.assign({},entries[idx],{date:iso,locLabel:curLocLabel||entries[idx].locLabel,lat:curLat||entries[idx].lat,lng:curLng||entries[idx].lng,msg:msg,bird:selBird||entries[idx].bird,photo:curPhoto||entries[idx].photo});
+    } else {
+      entries.unshift({id:Date.now(),date:iso,photo:curPhoto,lat:curLat,lng:curLng,locLabel:curLocLabel,bird:selBird||null,msg:msg});
+    }
+    saveLocal();renderEntries();
   }
-  save();renderEntries();closeForm();
+  closeForm();
 }
 
 /* ── CALENDAR ── */
-let cy=new Date().getFullYear(),cm=new Date().getMonth()+1;
+var cy=new Date().getFullYear(),cm=new Date().getMonth()+1;
 function buildCal(y,m){
-  const T=t(),isJa=T.sh;
-  document.getElementById('cml').textContent=T.cm(y,m);
-  const DOW=T.dow;
-  document.getElementById('cdw').innerHTML=DOW.map((d,i)=>`<span style="${i===0?'color:#E24B4A':i===6?'color:#185FA5':''}">${d}</span>`).join('');
-  const fd=new Date(y,m-1,1).getDay(),ld=new Date(y,m,0).getDate(),now=new Date();
-  let h='';
+  document.getElementById('cml').textContent=y+'年'+m+'月';
+  document.getElementById('cdw').innerHTML=DOWJ.map(function(d,i){return'<span style="'+(i===0?'color:#E24B4A':i===6?'color:#185FA5':'')+'">'+ d+'</span>';}).join('');
+  var fd=new Date(y,m-1,1).getDay(),ld=new Date(y,m,0).getDate(),now=new Date();
+  var h='';
   function cell(d,yr,mo,dim){
-    const key=`${yr}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const idx=rki(yr,mo,d),rc=RKC[idx],hol=isJa?JH[key]:null;
-    const ent=entries.find(e=>e.date.slice(0,10)===key);
-    const isT=(yr===now.getFullYear()&&mo===now.getMonth()+1&&d===now.getDate());
-    const dw=new Date(yr,mo-1,d).getDay();
-    const dc=hol?'#E24B4A':dw===0?'#E24B4A':dw===6?'#185FA5':'';
-    const isAo=ent&&ent.bird&&(ent.bird.includes('アオ')||ent.bird.includes('Green'));
-    return`<div class="cc${dim?' dm':''}${isT?' td':''}${ent?' has':''}" onclick="selD('${key}',${d})"><div class="dn" style="${dc&&!isT?'color:'+dc:''}">${d}</div><div class="dk" style="background:${rc}"></div>${hol?`<div class="hn">${hol.length>4?hol.slice(0,3)+'…':hol}</div>`:''} ${ent?`<div class="cbg" style="background:${isAo?'#D4C8E8':'#C8DEC8'}"></div>`:''}</div>`;
+    var key=yr+'-'+pad(mo)+'-'+pad(d);
+    var idx=rki(yr,mo,d),rc=RKC[idx],hol=JH[key]||null;
+    var ent=entries.find(function(e){return e.date.slice(0,10)===key;});
+    var isT=(yr===now.getFullYear()&&mo===now.getMonth()+1&&d===now.getDate());
+    var dw=new Date(yr,mo-1,d).getDay();
+    var dc=hol?'#E24B4A':dw===0?'#E24B4A':dw===6?'#185FA5':'';
+    var isAo=ent&&ent.bird&&(ent.bird.indexOf('アオ')>-1||ent.bird.indexOf('Green')>-1);
+    return'<div class="cc'+(dim?' dm':'')+(isT?' td':'')+(ent?' has':'')+'" onclick="selD(\''+key+'\','+d+')"><div class="dn" style="'+(dc&&!isT?'color:'+dc:'')+'">'+d+'</div><div class="dk" style="background:'+rc+'"></div>'+(hol?'<div class="hn">'+(hol.length>4?hol.slice(0,3)+'…':hol)+'</div>':'')+(ent?'<div class="cbg" style="background:'+(isAo?'#D4C8E8':'#C8DEC8')+'"></div>':'')+'</div>';
   }
-  for(let i=0;i<fd;i++){const d=new Date(y,m-1,0).getDate()-fd+1+i;h+=cell(d,y,m===1?12:m-1,true);}
-  for(let d=1;d<=ld;d++) h+=cell(d,y,m,false);
+  for(var i=0;i<fd;i++){var pd=new Date(y,m-1,0).getDate()-fd+1+i;h+=cell(pd,y,m===1?12:m-1,true);}
+  for(var d=1;d<=ld;d++) h+=cell(d,y,m,false);
   document.getElementById('cg').innerHTML=h;
   document.getElementById('cal-det').classList.remove('on');
-  const T2=t();
-  document.getElementById('hll').textContent=T2.hll;
-  const hls=document.getElementById('hls');
-  if(!isJa){hls.innerHTML=`<div style="font-size:11px;color:#9E7A68">${T2.noh}</div>`;return;}
-  let items=[];
-  for(let d=1;d<=ld;d++){const k=`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;if(JH[k])items.push({d,n:JH[k]});}
-  hls.innerHTML=items.length?items.map(({d,n})=>`<div class="hi"><div class="hm"></div><span style="min-width:24px;font-weight:500;color:var(--brown)">${d}日</span><span>${n}</span></div>`).join(''):`<div style="font-size:11px;color:#9E7A68">${T2.noh}</div>`;
+  document.getElementById('hll').textContent='今月の祝日';
+  var hls=document.getElementById('hls'),items=[];
+  for(var d2=1;d2<=ld;d2++){var k=y+'-'+pad(m)+'-'+pad(d2);if(JH[k])items.push({d:d2,n:JH[k]});}
+  hls.innerHTML=items.length?items.map(function(it){return'<div class="hi"><div class="hm"></div><span style="min-width:24px;font-weight:500;color:var(--brown)">'+it.d+'日</span><span>'+it.n+'</span></div>';}).join(''):'<div style="font-size:11px;color:#9E7A68">祝日なし</div>';
 }
 function selD(key,d){
-  const T=t(),isJa=T.sh,ent=entries.find(e=>e.date.slice(0,10)===key),hol=isJa?JH[key]:null;
-  const det=document.getElementById('cal-det');
+  var ent=entries.find(function(e){return e.date.slice(0,10)===key;}),hol=JH[key]||null;
+  var det=document.getElementById('cal-det');
   if(!ent&&!hol){det.classList.remove('on');return;}
-  const[y,m]=key.split('-').map(Number),idx=rki(y,m,d);
-  const isAo=ent&&ent.bird&&(ent.bird.includes('アオ')||ent.bird.includes('Green'));
-  det.innerHTML=`<div style="display:flex;gap:9px;align-items:center"><div style="width:52px;height:52px;border-radius:10px;background:${isAo?'#F0EBF5':'#EDF5ED'};display:flex;align-items:center;justify-content:center;flex-shrink:0">${ent&&ent.photo?`<img src="${ent.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`:`<svg width="32" height="32" viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="31" rx="14" ry="10" fill="${isAo?'#D4C8E8':'#C8DEC8'}"/><ellipse cx="24" cy="25" rx="9" ry="8" fill="${isAo?'#9E87C8':'#4A7A58'}"/></svg>`}</div><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:500;color:var(--brown)">${T.sd(y,m,d)}</div>${hol?`<div style="font-size:11px;color:#E24B4A;margin:1px 0">🎌 ${hol}</div>`:''} ${ent?`<div style="font-size:11px;color:#4A7A58">📍 ${esc(ent.locLabel||'')}</div><div style="font-size:12px;color:#9E7A68;line-height:1.5;margin-top:2px">${esc(ent.msg||'')}</div>`:''}<div style="margin-top:4px"><span class="tg" style="border-color:${RKC[idx]};color:${RKT[idx]};background:${RKB[idx]}">${T.rn[idx]}</span></div></div></div>`;
+  var parts=key.split('-').map(Number),yr=parts[0],mo=parts[1],idx=rki(yr,mo,d);
+  var isAo=ent&&ent.bird&&(ent.bird.indexOf('アオ')>-1||ent.bird.indexOf('Green')>-1);
+  det.innerHTML='<div style="display:flex;gap:9px;align-items:center"><div style="width:52px;height:52px;border-radius:10px;background:'+(isAo?'#F0EBF5':'#EDF5ED')+';display:flex;align-items:center;justify-content:center;flex-shrink:0">'+(ent&&ent.photo?'<img src="'+ent.photo+'" style="width:100%;height:100%;object-fit:cover;border-radius:10px">':'<svg width="32" height="32" viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="31" rx="14" ry="10" fill="'+(isAo?'#D4C8E8':'#C8DEC8')+'"/><ellipse cx="24" cy="25" rx="9" ry="8" fill="'+(isAo?'#9E87C8':'#4A7A58')+'"/></svg>')+'</div><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:500;color:var(--brown)">'+yr+'年'+mo+'月'+d+'日</div>'+(hol?'<div style="font-size:11px;color:#E24B4A;margin:1px 0">🎌 '+hol+'</div>':'')+(ent?'<div style="font-size:11px;color:#4A7A58">📍 '+esc(ent.locLabel||'')+'</div><div style="font-size:12px;color:#9E7A68;line-height:1.5;margin-top:2px">'+esc(ent.msg||'')+'</div>':'')+'<div style="margin-top:4px"><span class="tg" style="border-color:'+RKC[idx]+';color:'+RKT[idx]+';background:'+RKB[idx]+'">'+RNJ[idx]+'</span></div></div></div>';
   det.classList.add('on');
 }
-document.getElementById('pm').addEventListener('click',()=>{cm--;if(cm<1){cm=12;cy--;}buildCal(cy,cm);});
-document.getElementById('nm').addEventListener('click',()=>{cm++;if(cm>12){cm=1;cy++;}buildCal(cy,cm);});
+document.getElementById('pm').addEventListener('click',function(){cm--;if(cm<1){cm=12;cy--;}buildCal(cy,cm);});
+document.getElementById('nm').addEventListener('click',function(){cm++;if(cm>12){cm=1;cy++;}buildCal(cy,cm);});
 
 /* ── ZUKAN ── */
-const BDAT=[
-  {bg:'#EDF5ED',sc:'Columba livia',ln:'33cm',rr:'★★★★',il:`<svg width="90" height="100" viewBox="0 0 80 90" fill="none"><ellipse cx="40" cy="62" rx="24" ry="18" fill="#C8DEC8"/><ellipse cx="40" cy="47" rx="17" ry="16" fill="#4A7A58"/><circle cx="52" cy="39" r="8" fill="#2E5C3A"/><circle cx="55" cy="36.5" r="2.2" fill="white"/><path d="M57 41L68 38 66 43Z" fill="#D4904A"/><path d="M22 62Q14 54 10 62Q17 66 22 62Z" fill="#4A7A58"/><path d="M58 62Q66 54 70 62Q63 66 58 62Z" fill="#4A7A58"/></svg>`},
-  {bg:'#F0EBF5',sc:'Treron sieboldii',ln:'33cm',rr:'★★',il:`<svg width="90" height="100" viewBox="0 0 80 90" fill="none"><ellipse cx="40" cy="62" rx="22" ry="17" fill="#D4C8E8"/><ellipse cx="40" cy="47" rx="16" ry="15" fill="#9E87C8"/><circle cx="51" cy="39" r="7.5" fill="#7A68A8"/><circle cx="53.5" cy="36.5" r="2" fill="white"/><path d="M55 41L66 38 64 43Z" fill="#E8A050"/><path d="M22 62Q14 54 10 62Q17 66 22 62Z" fill="#9E87C8"/><path d="M57 62Q65 54 69 62Q62 66 57 62Z" fill="#9E87C8"/></svg>`}
+var BDAT=[
+  {bg:'#EDF5ED',sc:'Columba livia',ln:'33cm',rr:'★★★★',bd:'日本全国の都市部に広く生息する最もポピュラーな鳩。家畜化されたイエバトが野生化したもの。グレーの羽に虹色の首元が特徴。',bh:'鳩日記でもっとも出会いやすい鳥。公園・駅前・川沿いなどどこにでも現れます。',il:'<svg width="90" height="100" viewBox="0 0 80 90" fill="none"><ellipse cx="40" cy="62" rx="24" ry="18" fill="#C8DEC8"/><ellipse cx="40" cy="47" rx="17" ry="16" fill="#4A7A58"/><circle cx="52" cy="39" r="8" fill="#2E5C3A"/><circle cx="55" cy="36.5" r="2.2" fill="white"/><path d="M57 41L68 38 66 43Z" fill="#D4904A"/></svg>'},
+  {bg:'#F0EBF5',sc:'Treron sieboldii',ln:'33cm',rr:'★★',bd:'日本固有種の鳩。黄緑色と紫がかった美しい羽が特徴。海岸の岩場で海水を飲む珍しい習性を持つ。',bh:'ドバトより出会いにくいレアな鳩。発見できたら大吉のしるし。',il:'<svg width="90" height="100" viewBox="0 0 80 90" fill="none"><ellipse cx="40" cy="62" rx="22" ry="17" fill="#D4C8E8"/><ellipse cx="40" cy="47" rx="16" ry="15" fill="#9E87C8"/><circle cx="51" cy="39" r="7.5" fill="#7A68A8"/><circle cx="53.5" cy="36.5" r="2" fill="white"/><path d="M55 41L66 38 64 43Z" fill="#E8A050"/></svg>'}
 ];
+var BN=['ドバト','アオバト'];
 function opB(i){
-  const T=t(),b=BDAT[i];
-  const cnt=entries.filter(e=>{const n=e.bird||'';return i===0?(n.includes('ドバ')||n.includes('Rock')):(n.includes('アオ')||n.includes('Green'));}).length;
+  var b=BDAT[i];
+  var cnt=entries.filter(function(e){var n=e.bird||'';return i===0?(n.indexOf('ドバ')>-1||n.indexOf('Rock')>-1):(n.indexOf('アオ')>-1||n.indexOf('Green')>-1);}).length;
   document.getElementById('zi').innerHTML=b.il;document.getElementById('zi').style.background=b.bg;
-  document.getElementById('d-nm').textContent=T.bn[i];
+  document.getElementById('d-nm').textContent=BN[i];
   document.getElementById('d-sc').textContent=b.sc;
   document.getElementById('d-ln').textContent=b.ln;
-  document.getElementById('d-mt').textContent=T.bm(cnt);
+  document.getElementById('d-mt').textContent='遭遇 '+cnt+'回';
   document.getElementById('d-rr').textContent=b.rr;
-  document.getElementById('d-lk').textContent=T.lk;
-  document.getElementById('d-mk').textContent=T.mk2;
-  document.getElementById('d-rk').textContent=T.rk;
-  document.getElementById('d-el').textContent=T.el;
-  document.getElementById('d-rl').textContent=T.rl2;
-  document.getElementById('d-ds').textContent=T.bd[i];
-  document.getElementById('d-ht').textContent=T.bh[i];
-  document.getElementById('zbk-lbl').textContent=T.zbk;
+  document.getElementById('d-lk').textContent='全長';
+  document.getElementById('d-mk').textContent='遭遇';
+  document.getElementById('d-rk').textContent='レア度';
+  document.getElementById('d-el').textContent='生態';
+  document.getElementById('d-rl').textContent='鳩日記との関係';
+  document.getElementById('d-ds').textContent=b.bd;
+  document.getElementById('d-ht').textContent=b.bh;
   document.getElementById('zd').classList.add('on');
   document.getElementById('zl').classList.add('ps');
 }
 function clB(){document.getElementById('zd').classList.remove('on');document.getElementById('zl').classList.remove('ps');}
-function fltB(){const q=document.getElementById('zq').value.toLowerCase();document.querySelectorAll('#bg .bc').forEach((c,i)=>{c.style.display=(!q||t().bn[i].toLowerCase().includes(q))?'block':'none';});}
+function fltB(){var q=document.getElementById('zq').value.toLowerCase();document.querySelectorAll('#bg .bc').forEach(function(c,i){c.style.display=(!q||BN[i].toLowerCase().indexOf(q)>-1)?'block':'none';});}
 
-/* ── LANG ── */
 function setL(l){
   lang=l;
   document.getElementById('lo-ja').classList.toggle('on',l==='ja');
   document.getElementById('lo-en').classList.toggle('on',l==='en');
-  const T=L[l];
-  document.getElementById('add-btn').textContent=T.add;
-  document.getElementById('zq').placeholder=T.sp;
-  document.getElementById('b0n').textContent=T.bn[0];
-  document.getElementById('b1n').textContent=T.bn[1];
-  document.getElementById('zbk-lbl').textContent=T.zbk;
-  document.getElementById('s-al').textContent=T.al;
-  document.getElementById('s-gu').textContent=T.gu;
-  document.getElementById('s-gs').textContent=T.gs;
-  document.getElementById('s-gg').textContent=T.gg;
-  document.getElementById('s-ap').textContent=T.ap;
-  document.getElementById('s-or').textContent=T.or;
-  document.getElementById('s-em').textContent=T.em;
-  document.getElementById('s-ll').textContent=T.ll;
-  document.getElementById('s-nl').textContent=T.nl;
-  document.getElementById('s-rm').textContent=T.rm;
-  document.getElementById('s-bk').textContent=T.bk;
-  document.getElementById('s-bs').textContent=T.bs;
-  document.getElementById('s-vr').textContent=T.vr;
-  for(let i=0;i<4;i++) document.getElementById('nv'+i).textContent=T.nav[i];
-  initRk();renderEntries();buildCal(cy,cm);
 }
 
 /* ── SWIPE ── */
-const TR=document.getElementById('tr');
-let cur=0,sx=0,drag=false,msx=0,md=false;
-function go(n,anim=true){
+var TR=document.getElementById('tr');
+var cur=0,sx=0,drag=false,msx=0,md=false;
+function go(n,anim){
+  if(anim===undefined)anim=true;
   cur=n;
   TR.style.transition=anim?'transform .32s cubic-bezier(.4,0,.2,1)':'none';
-  TR.style.transform=`translateX(${-n*25}%)`;
-  document.querySelectorAll('.nt').forEach((t,i)=>t.classList.toggle('on',i===n));
+  TR.style.transform='translateX('+(-n*25)+'%)';
+  document.querySelectorAll('.nt').forEach(function(t,i){t.classList.toggle('on',i===n);});
   if(n===1)buildCal(cy,cm);
 }
-TR.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;drag=true;TR.style.transition='none';},{passive:true});
-TR.addEventListener('touchmove',e=>{
-  if(!drag)return;
-  const dx=e.touches[0].clientX-sx,dy=Math.abs(e.touches[0].clientY-e.touches[0].clientY);
-  const p=Math.max(-75,Math.min(0,-cur*25+(dx/TR.parentElement.offsetWidth*100)));
-  TR.style.transform=`translateX(${p}%)`;
-},{passive:true});
-TR.addEventListener('touchend',e=>{
-  if(!drag)return;drag=false;
-  const dx=e.changedTouches[0].clientX-sx;
-  if(dx<-50&&cur<3)cur++;else if(dx>50&&cur>0)cur--;
-  go(cur);
-});
-TR.addEventListener('mousedown',e=>{msx=e.clientX;md=true;TR.style.transition='none';});
-window.addEventListener('mousemove',e=>{
-  if(!md)return;
-  const p=Math.max(-75,Math.min(0,-cur*25+((e.clientX-msx)/TR.parentElement.offsetWidth*100)));
-  TR.style.transform=`translateX(${p}%)`;
-});
-window.addEventListener('mouseup',e=>{
-  if(!md)return;md=false;
-  const dx=e.clientX-msx;
-  if(dx<-50&&cur<3)cur++;else if(dx>50&&cur>0)cur--;
-  go(cur);
-});
+TR.addEventListener('touchstart',function(e){if(e.target.closest('button,input,textarea,a'))return;sx=e.touches[0].clientX;drag=true;TR.style.transition='none';},{passive:true});
+TR.addEventListener('touchmove',function(e){if(!drag)return;var p=Math.max(-75,Math.min(0,-cur*25+((e.touches[0].clientX-sx)/TR.parentElement.offsetWidth*100)));TR.style.transform='translateX('+p+'%)';},{passive:true});
+TR.addEventListener('touchend',function(e){if(!drag)return;drag=false;var dx=e.changedTouches[0].clientX-sx;if(dx<-50&&cur<3)cur++;else if(dx>50&&cur>0)cur--;go(cur);});
+TR.addEventListener('mousedown',function(e){if(e.target.closest('button,input,textarea,a'))return;msx=e.clientX;md=true;TR.style.transition='none';});
+window.addEventListener('mousemove',function(e){if(!md)return;var p=Math.max(-75,Math.min(0,-cur*25+((e.clientX-msx)/TR.parentElement.offsetWidth*100)));TR.style.transform='translateX('+p+'%)';});
+window.addEventListener('mouseup',function(e){if(!md)return;md=false;var dx=e.clientX-msx;if(dx<-50&&cur<3)cur++;else if(dx>50&&cur>0)cur--;go(cur);});
 
 /* ── BOOT ── */
 initRk();
-load();
 buildCal(cy,cm);
+loadLocal(); // まずローカルを読む
+
+// Supabase auth 監視
+if(sb){
+  sb.auth.onAuthStateChange(function(event,session){
+    currentUser=session?session.user:null;
+    updateAuthUI();
+    loadEntries();
+  });
+  sb.auth.getSession().then(function(res){
+    if(!res.data||!res.data.session){
+      // セッションなし → ローカルで動作
+      updateAuthUI();
+    }
+  });
+}
 </script>
 </body>
 </html>
