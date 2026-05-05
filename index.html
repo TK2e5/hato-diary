@@ -825,7 +825,7 @@ function go(n,anim=true){
   document.querySelectorAll('.nt').forEach((t,i)=>t.classList.toggle('on',i===n));
   if(n===1)buildCal(cy,cm);
 }
-TR.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;drag=true;TR.style.transition='none';},{passive:true});
+TR.addEventListener('touchstart',e=>{if(e.target.closest('button,input,textarea,a'))return;sx=e.touches[0].clientX;drag=true;TR.style.transition='none';},{passive:true});
 TR.addEventListener('touchmove',e=>{
   if(!drag)return;
   const dx=e.touches[0].clientX-sx,dy=Math.abs(e.touches[0].clientY-e.touches[0].clientY);
@@ -838,7 +838,7 @@ TR.addEventListener('touchend',e=>{
   if(dx<-50&&cur<3)cur++;else if(dx>50&&cur>0)cur--;
   go(cur);
 });
-TR.addEventListener('mousedown',e=>{msx=e.clientX;md=true;TR.style.transition='none';});
+TR.addEventListener('mousedown',e=>{if(e.target.closest('button,input,textarea,a'))return;msx=e.clientX;md=true;TR.style.transition='none';});
 window.addEventListener('mousemove',e=>{
   if(!md)return;
   const p=Math.max(-75,Math.min(0,-cur*25+((e.clientX-msx)/TR.parentElement.offsetWidth*100)));
